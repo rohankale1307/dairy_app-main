@@ -123,20 +123,23 @@ class _NewMilkSaleRecordScreenState extends State<NewMilkSaleRecordScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 20,
+        bottomNavigationBar: Container(
+          color: const Color.fromRGBO(245, 245, 245, 1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 20,
+            ),
+            child: widget.isEdit
+                ? EditCollectionButton(
+                    onDeletePressed: () {},
+                    onSavePressed: () {},
+                  )
+                : NewCollectionButton(
+                    title: 'Save and Send to Customer',
+                    onPressed: () {},
+                  ),
           ),
-          child: widget.isEdit
-              ? EditCollectionButton(
-                  onDeletePressed: () {},
-                  onSavePressed: () {},
-                )
-              : NewCollectionButton(
-                  title: 'Save and Send to Customer',
-                  onPressed: () {},
-                ),
         ),
       ),
     );

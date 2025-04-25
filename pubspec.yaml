@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dotted_line: ^3.2.3
   material_table_view: ^5.1.0
+  google_fonts: ^6.2.1
+  
 
   
 

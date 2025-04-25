@@ -23,7 +23,8 @@ class AllReportScreen extends StatelessWidget {
         child: Column(
           children: [
             ReportHeadingWidget(
-              title: 'Milk Collection REport',
+              image: 'milk_collection.png',
+              title: 'Milk Collection Report',
               onPressed: () {
                 Navigator.push(
                   context,
@@ -36,6 +37,7 @@ class AllReportScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: ReportHeadingWidget(
+                image: 'cattle_feed.png',
                 title: 'Cattle Feed Report',
                 onPressed: () {
                   Navigator.push(
@@ -48,6 +50,7 @@ class AllReportScreen extends StatelessWidget {
               ),
             ),
             ReportHeadingWidget(
+              image: 'advance.png',
               title: 'Advance and Deduction Statements',
               onPressed: () {
                 Navigator.push(
@@ -61,6 +64,7 @@ class AllReportScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: ReportHeadingWidget(
+                image: 'net_payment_report.png',
                 title: 'Net Payment Report',
                 onPressed: () {
                   Navigator.push(
@@ -73,7 +77,8 @@ class AllReportScreen extends StatelessWidget {
               ),
             ),
             ReportHeadingWidget(
-              title: 'Milk Sales REport',
+              image: 'milk_sales.png',
+              title: 'Milk Sales Report',
               onPressed: () {
                 Navigator.push(
                   context,
@@ -95,30 +100,21 @@ class ReportHeadingWidget extends StatelessWidget {
     super.key,
     required this.title,
     this.onPressed,
+    required this.image,
   });
 
   final String title;
   final void Function()? onPressed;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: IconButton(
-            onPressed: onPressed,
-            icon: const Icon(Icons.circle_outlined),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                const Color.fromRGBO(245, 245, 245, 1),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: onPressed,
-          child: Padding(
+    return GestureDetector(
+      onTap: onPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               title,
@@ -129,8 +125,12 @@ class ReportHeadingWidget extends StatelessWidget {
               ),
             ),
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Image.asset('assets/images/$image'),
+          ),
+        ],
+      ),
     );
   }
 }

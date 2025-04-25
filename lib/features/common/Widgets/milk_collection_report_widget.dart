@@ -110,7 +110,7 @@ class MilkCollectionReportWidget extends StatelessWidget {
                             ...List.generate(
                               firstColumnHeaders.length,
                               (valueIndex) => Container(
-                                width: 120,
+                                width: MediaQuery.sizeOf(context).width / 3,
                                 padding: const EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,

@@ -2,7 +2,6 @@ import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/Widgets/cattle_feed_report_widget.dart';
-import '../../common/Widgets/date_picker.dart';
 import '../../common/model/dairy_app_model.dart';
 
 class CattleFeedReport extends StatelessWidget {
@@ -289,41 +288,38 @@ class CattleFeedReport extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Cattle Feed REport',
+          title: 'Cattle Feed Report',
           context: context,
+          isShowDatePicker: true,
+          isShowSearchIcon: true,
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
-                ),
-                child: DatePicker(),
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  height: MediaQuery.sizeOf(context).height / 16,
-                  child: SearchBar(
-                    hintText: 'Search',
-                    elevation: const WidgetStatePropertyAll(0),
-                    backgroundColor: WidgetStateProperty.all(
-                      const Color.fromRGBO(245, 245, 245, 1),
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  color: const Color.fromRGBO(229, 240, 252, 1),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          '10 Jan 2025 to 20 Jan 2025',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
                     ),
-                    trailing: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                      ),
-                    ],
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Table(
                   columnWidths: const {
                     0: FlexColumnWidth(2),

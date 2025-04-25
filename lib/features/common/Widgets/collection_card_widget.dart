@@ -21,7 +21,7 @@ class CollectionCardWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.transparent,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
             width: 2,
             color: const Color.fromRGBO(207, 207, 207, 1),
@@ -30,7 +30,13 @@ class CollectionCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color.fromRGBO(245, 245, 245, 1),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              color: Color.fromRGBO(245, 245, 245, 1),
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Row(

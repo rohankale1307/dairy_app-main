@@ -1,7 +1,17 @@
+import 'package:dairy_app/features/common/model/dairy_app_model.dart';
 import 'package:flutter/material.dart';
 
 class AdvanceAmountWidget extends StatelessWidget {
-  const AdvanceAmountWidget({super.key});
+  const AdvanceAmountWidget({
+    super.key,
+    required this.advanceAmtModel,
+    required this.index,
+    this.isDeductionAmount = false,
+  });
+
+  final List<AdvanceAmountModel> advanceAmtModel;
+  final int index;
+  final bool isDeductionAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +28,37 @@ class AdvanceAmountWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color.fromRGBO(245, 245, 245, 1),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Color.fromRGBO(245, 245, 245, 1),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Row(
                 children: [
                   Text(
-                    '125',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    advanceAmtModel[index].id,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Text(
-                    'Rohan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    advanceAmtModel[index].name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
+          Padding(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 16,
             ),
@@ -48,16 +69,16 @@ class AdvanceAmountWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Advance Amount',
-                      style: TextStyle(
+                      isDeductionAmount ? 'Deduction Amount' : 'Advance Amount',
+                      style: const TextStyle(
                         color: Color.fromRGBO(127, 127, 127, 1),
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
-                      '10000',
-                      style: TextStyle(
+                      advanceAmtModel[index].amount,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -65,12 +86,12 @@ class AdvanceAmountWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  'Note: New Car Purchase',
-                  style: TextStyle(
+                  advanceAmtModel[index].note,
+                  style: const TextStyle(
                     color: Color.fromRGBO(127, 127, 127, 1),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -79,8 +100,8 @@ class AdvanceAmountWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               left: 16,
               right: 16,
               bottom: 16,
@@ -89,8 +110,8 @@ class AdvanceAmountWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '1 Jan 2024 : Morning 9.25 AM',
-                  style: TextStyle(color: Color.fromRGBO(92, 92, 92, 1)),
+                  advanceAmtModel[index].date,
+                  style: const TextStyle(color: Color.fromRGBO(92, 92, 92, 1)),
                 ),
               ],
             ),

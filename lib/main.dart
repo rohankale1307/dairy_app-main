@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'features/login_user/welcome_screen.dart';
 
 void main() {
@@ -10,8 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: WelcomeScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.figtreeTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+      home: const WelcomeScreen(),
     );
   }
 }

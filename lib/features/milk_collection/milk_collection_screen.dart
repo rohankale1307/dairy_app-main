@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../common/Widgets/button_widget.dart';
 import '../common/Widgets/collection_card_widget.dart';
-import '../common/Widgets/date_picker.dart';
 import '../common/Widgets/default_appbar.dart';
 import '../common/model/dairy_app_model.dart';
 import 'add_new_collection.dart';
@@ -37,7 +36,7 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       rate: 34.50,
       liter: 5.5,
       amount: 250,
-      dateTime: '01 Jan 2024 • Morning 09:25 AM',
+      dateTime: '14/04/2025',
       milkType: 'Cow',
     ),
     CollectionCardData(
@@ -48,7 +47,7 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       rate: 34.50,
       liter: 5.5,
       amount: 250,
-      dateTime: '01 Jan 2024 • Morning 09:25 AM',
+      dateTime: '14/04/2025',
       milkType: 'Cow',
     ),
     CollectionCardData(
@@ -59,7 +58,7 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       rate: 34.50,
       liter: 5.5,
       amount: 250,
-      dateTime: '01 Jan 2024 • Morning 09:25 AM',
+      dateTime: '13/04/2025',
       milkType: 'Cow',
     ),
     CollectionCardData(
@@ -70,7 +69,7 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       rate: 34.50,
       liter: 5.5,
       amount: 250,
-      dateTime: '01 Jan 2024 • Morning 09:25 AM',
+      dateTime: '13/04/2025',
       milkType: 'Cow',
     ),
     CollectionCardData(
@@ -81,7 +80,18 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       rate: 34.50,
       liter: 5.5,
       amount: 250,
-      dateTime: '01 Jan 2024 • Morning 09:25 AM',
+      dateTime: '12/04/2025',
+      milkType: 'Cow',
+    ),
+    CollectionCardData(
+      id: 125,
+      name: 'Kapil Chavan',
+      fat: 3.5,
+      snf: 8.5,
+      rate: 34.50,
+      liter: 5.5,
+      amount: 250,
+      dateTime: '11/04/2025',
       milkType: 'Cow',
     ),
   ];
@@ -94,22 +104,37 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Collection',
+          title: 'Collections',
           context: context,
+          isShowDatePicker: true,
+          isShowSearchIcon: true,
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 12,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  color: const Color.fromRGBO(229, 240, 252, 1),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          '10 Jan 2025 to 20 Jan 2025',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                child: DatePicker(),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Table(
                   columnWidths: const {
                     0: FlexColumnWidth(2),
@@ -133,49 +158,88 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
                 ),
               ),
               ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: collectionCardList.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AddNewCollectionScreen(
-                              isEdit: true,
+                  final currentIndexDateStr =
+                      collectionCardList.elementAt(index).dateTime ?? '';
+
+                  final previousIndexDateStr = collectionCardList
+                          .elementAt(index == 0 ? index : index - 1)
+                          .dateTime ??
+                      '';
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (index == 0 ||
+                          currentIndexDateStr != previousIndexDateStr)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 10),
+                          child: Container(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              vertical: 12,
+                              horizontal: 16,
+                            ),
+                            color: const Color.fromRGBO(239, 249, 252, 1),
+                            child: Text(
+                              showDateLabel(currentIndexDateStr),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                        );
-                      },
-                      child: CollectionCardWidget(
-                        collectionCardData: collectionCardList,
-                        index: index,
-                        buildInfoColumn: [
-                          BuildInfoColumn(
-                              label: 'Fat',
-                              value: collectionCardList[index].fat.toString()),
-                          BuildInfoColumn(
-                              label: 'SNF',
-                              value: collectionCardList[index].snf.toString()),
-                          BuildInfoColumn(
-                              label: 'Rate',
-                              value: '₹ ${collectionCardList[index].rate}'),
-                          BuildInfoColumn(
-                              label: 'Liter',
-                              value:
-                                  collectionCardList[index].liter.toString()),
-                          BuildInfoColumn(
-                              label: 'Amount',
-                              value: '₹ ${collectionCardList[index].amount}'),
-                        ],
+                        ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const AddNewCollectionScreen(
+                                isEdit: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 16,
+                          ),
+                          child: CollectionCardWidget(
+                            collectionCardData: collectionCardList,
+                            index: index,
+                            buildInfoColumn: [
+                              BuildInfoColumn(
+                                  label: 'Fat',
+                                  value:
+                                      collectionCardList[index].fat.toString()),
+                              BuildInfoColumn(
+                                  label: 'SNF',
+                                  value:
+                                      collectionCardList[index].snf.toString()),
+                              BuildInfoColumn(
+                                  label: 'Rate',
+                                  value: '₹ ${collectionCardList[index].rate}'),
+                              BuildInfoColumn(
+                                  label: 'Liter',
+                                  value: collectionCardList[index]
+                                      .liter
+                                      .toString()),
+                              BuildInfoColumn(
+                                  label: 'Amount',
+                                  value:
+                                      '₹ ${collectionCardList[index].amount}'),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   );
                 },
               ),
@@ -197,5 +261,51 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
         ),
       ),
     );
+  }
+
+  String showDateLabel(String currentIndexDateStr) {
+    final collectionDateTime =
+        DateTime.parse(currentIndexDateStr.split('/').reversed.join());
+    final dateDifference = DateTime.now().difference(collectionDateTime);
+    if (dateDifference.inHours < 24) {
+      return 'Today';
+    } else if (dateDifference.inHours < 48) {
+      return 'Yesterday';
+    } else {
+      final formattedDate =
+          '${collectionDateTime.day} ${getMonthName(collectionDateTime.month)} ${collectionDateTime.year}';
+      return formattedDate;
+    }
+  }
+
+  getMonthName(int month) {
+    switch (month) {
+      case 0:
+        return 'January';
+      case 1:
+        return 'Febuary';
+      case 2:
+        return 'March';
+      case 3:
+        return 'April';
+      case 4:
+        return 'May';
+      case 5:
+        return 'June';
+      case 6:
+        return 'July';
+      case 7:
+        return 'August';
+      case 8:
+        return 'September';
+      case 9:
+        return 'Octomber';
+      case 10:
+        return 'November';
+      case 11:
+        return 'December';
+      default:
+        return '$month';
+    }
   }
 }

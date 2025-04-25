@@ -60,10 +60,6 @@ class _AdvanceDeductionStatementState extends State<AdvanceDeductionStatement> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DefaultAppbar.defaultAppbar(
-        title: 'Advance and Deduction Statement',
-        context: context,
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
@@ -76,52 +72,59 @@ class _AdvanceDeductionStatementState extends State<AdvanceDeductionStatement> {
                   color: const Color.fromRGBO(245, 245, 245, 1),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(
+                      horizontal: 16,
                       vertical: 9,
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '125',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '125',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                'Rohan Kale',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                child: Text(
-                                  'Rohan Kale',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.lock,
-                            size: 20,
-                          )
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.lock,
+                          size: 20,
+                        )
+                      ],
                     ),
                   ),
                 ),
               ),
               const BuildAdvanceRow(
-                  title: 'Total Advance', value: 10000, isTotal: false),
+                title: 'Total Advance',
+                value: 10000,
+                isTotal: false,
+              ),
               const BuildAdvanceRow(
-                  title: 'Total Deduction', value: 10000, isTotal: false),
+                title: 'Total Deduction',
+                value: 10000,
+                isTotal: false,
+              ),
               const BuildAdvanceRow(
-                  title: 'Total Advance Balance', value: 10000, isTotal: true),
+                title: 'Total Advance Balance',
+                value: 10000,
+                isTotal: true,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 20,

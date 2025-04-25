@@ -18,6 +18,32 @@ class CattleFeedData {
   });
 }
 
+class CattleFeedRate {
+  String feedName;
+  String rate;
+
+  CattleFeedRate({
+    required this.feedName,
+    required this.rate,
+  });
+}
+
+class AdvanceAmountModel {
+  String id;
+  String name;
+  String note;
+  String date;
+  String amount;
+
+  AdvanceAmountModel({
+    required this.date,
+    required this.id,
+    required this.name,
+    required this.note,
+    required this.amount,
+  });
+}
+
 class DairyExpensesModel {
   String date;
   int total;

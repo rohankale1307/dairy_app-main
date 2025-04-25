@@ -14,6 +14,8 @@ class CustomerDataScreen extends StatelessWidget {
       appBar: DefaultAppbar.defaultAppbar(
         title: 'Customer List',
         context: context,
+        isShowDatePicker: true,
+        isShowSearchIcon: true,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),

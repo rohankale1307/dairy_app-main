@@ -27,6 +27,7 @@ class _AddNewCattleFeedSaleState extends State<AddNewCattleFeedSale> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
           title: 'New Cattle Feed Sale',
           context: context,
@@ -81,20 +82,23 @@ class _AddNewCattleFeedSaleState extends State<AddNewCattleFeedSale> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 20,
+        bottomNavigationBar: Container(
+          color: const Color.fromRGBO(245, 245, 245, 1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 10,
+            ),
+            child: widget.isEdit
+                ? EditCollectionButton(
+                    onDeletePressed: () {},
+                    onSavePressed: () {},
+                  )
+                : NewCollectionButton(
+                    title: 'Save and Send to Customer',
+                    onPressed: () {},
+                  ),
           ),
-          child: widget.isEdit
-              ? EditCollectionButton(
-                  onDeletePressed: () {},
-                  onSavePressed: () {},
-                )
-              : NewCollectionButton(
-                  title: 'Save and Send to Customer',
-                  onPressed: () {},
-                ),
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/model/dairy_app_model.dart';
-import 'advance_deduction_statement.dart';
+import 'advance_tab_bar.dart';
 
 class AdvanceDeductionReportScreen extends StatelessWidget {
   AdvanceDeductionReportScreen({super.key});
@@ -29,86 +29,93 @@ class AdvanceDeductionReportScreen extends StatelessWidget {
       appBar: DefaultAppbar.defaultAppbar(
         title: 'Advance & Deduction Report',
         context: context,
+        isShowDatePicker: true,
+        isShowSearchIcon: true,
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1.35,
-                  child: SearchBar(
-                    hintText: 'Search',
-                    elevation: const WidgetStatePropertyAll(0),
-                    backgroundColor: WidgetStateProperty.all(
-                      const Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    trailing: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: const Color.fromRGBO(229, 240, 252, 1),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        '10 Jan 2025 to 20 Jan 2025',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      )
                     ],
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    BuildAdvanceRow(
+                      title: 'Total Advance',
+                      value: 20000,
+                      isTotal: false,
+                    ),
+                    BuildAdvanceRow(
+                      title: 'Total Deduction',
+                      value: 20000,
+                      isTotal: false,
+                    ),
+                    BuildAdvanceRow(
+                      title: 'Total Advance Balance',
+                      value: 20000,
+                      isTotal: true,
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.settings_input_component_rounded,
-                    size: 20,
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      const Color.fromRGBO(245, 245, 245, 1),
+              ),
+              Container(
+                color: const Color.fromRGBO(255, 249, 229, 1),
+                child: const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    '''The date filter (10 Jan 2025  to  20 Jan 2025 ) does not apply to the statements below. The date filter will be applicable to only the Total table above. The total advance amount shown in above table is from statements/cards where the advance balance is above ₹ 0.''',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: reportList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      child: ExpenseReportCardWidget(
+                        data: reportList,
+                        index: index,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-          const BuildAdvanceRow(
-            title: 'Total Advance',
-            value: 20000,
-            isTotal: false,
-          ),
-          const BuildAdvanceRow(
-            title: 'Total Deduction',
-            value: 20000,
-            isTotal: false,
-          ),
-          const BuildAdvanceRow(
-            title: 'Total Advance Balance',
-            value: 20000,
-            isTotal: true,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: reportList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  child: ExpenseReportCardWidget(
-                    data: reportList,
-                    index: index,
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -129,9 +136,9 @@ class ExpenseReportCardWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.transparent,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(
-            width: 2,
+            width: 1,
             color: const Color.fromRGBO(207, 207, 207, 1),
           )),
       child: Column(
@@ -139,66 +146,33 @@ class ExpenseReportCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color.fromRGBO(245, 245, 245, 1),
+            decoration: BoxDecoration(
+                color: const Color.fromRGBO(245, 245, 245, 1),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromRGBO(207, 207, 207, 1),
+                )),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        data[index].id,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        data[index].name.toString(),
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const AdvanceDeductionStatement(),
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                        shape: WidgetStateProperty.all(
-                          const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(4),
-                            ),
-                          ),
-                        ),
-                        backgroundColor: WidgetStateProperty.all(
-                          Colors.black,
-                        )),
-                    child: const Row(
-                      children: [
-                        Text(
-                          'Statement',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 20,
-                          color: Colors.white,
-                        )
-                      ],
+                  Text(
+                    data[index].id,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    data[index].name.toString(),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
             ),
@@ -227,6 +201,51 @@ class ExpenseReportCardWidget extends StatelessWidget {
               totalAmt: data[index].totalAdvAmt - data[index].totalDedAmt,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AdvanceTabBar(),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                  shape: WidgetStateProperty.all(
+                    const BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                    ),
+                  ),
+                  backgroundColor: WidgetStateProperty.all(
+                    const Color.fromRGBO(245, 245, 245, 1),
+                  )),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'View all statements',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 20,
+                      color: Colors.black,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

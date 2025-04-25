@@ -8,6 +8,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
@@ -34,6 +35,7 @@ class RegisterScreen extends StatelessWidget {
                   lable: 'Phone Number',
                   prefixText: '+91 ',
                   keyboardType: TextInputType.phone,
+                  maxLength: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),

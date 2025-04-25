@@ -96,6 +96,8 @@ class _MilkRecordScreenState extends State<MilkRecordScreen> {
         appBar: DefaultAppbar.defaultAppbar(
           title: 'Collection',
           context: context,
+          isShowDatePicker: true,
+          isShowSearchIcon: true,
         ),
         body: SingleChildScrollView(
           child: Column(

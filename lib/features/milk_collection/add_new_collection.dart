@@ -64,22 +64,50 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
             ),
             child: Column(
               children: [
-                Wrap(
-                  spacing: 10,
-                  children: List.generate(
-                    4,
-                    (index) => GestureDetector(
-                      onTap: () {
-                        toggleSelection(index);
-                      },
-                      child: ChipWidget(
-                          isSelected:
-                              (index < 2 && selectedFirstGroup == index) ||
-                                  (index >= 2 && selectedLastGroup == index),
-                          label: lables[index]),
-                    ),
-                  ),
-                ),
+                ...List.generate(2, (colIndex) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        2,
+                        (rowIndex) {
+                          final index = (colIndex * 1) * 2 + rowIndex;
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () => toggleSelection(index),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ChipWidget(
+                                    isSelected: (index < 2 &&
+                                            selectedFirstGroup == index) ||
+                                        (index >= 2 &&
+                                            selectedLastGroup == index),
+                                    label: lables[index]),
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  );
+                }),
+                // Wrap(
+                //   spacing: 10,
+                //   runSpacing: 10,
+                //   children: List.generate(
+                //     4,
+                //     (index) => GestureDetector(
+                //       onTap: () {
+                //         toggleSelection(index);
+                //       },
+                //       child: ChipWidget(
+                //           isSelected:
+                //               (index < 2 && selectedFirstGroup == index) ||
+                //                   (index >= 2 && selectedLastGroup == index),
+                //           label: lables[index]),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
@@ -125,20 +153,23 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 20,
+        bottomNavigationBar: Container(
+          color: const Color.fromRGBO(245, 245, 245, 1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 20,
+            ),
+            child: widget.isEdit
+                ? EditCollectionButton(
+                    onDeletePressed: () {},
+                    onSavePressed: () {},
+                  )
+                : NewCollectionButton(
+                    title: 'Save and Send to Customer',
+                    onPressed: () {},
+                  ),
           ),
-          child: widget.isEdit
-              ? EditCollectionButton(
-                  onDeletePressed: () {},
-                  onSavePressed: () {},
-                )
-              : NewCollectionButton(
-                  title: 'Save and Send to Customer',
-                  onPressed: () {},
-                ),
         ),
       ),
     );

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../common/Widgets/default_appbar.dart';
 import '../common/Widgets/edit_collection_button.dart';
+import '../common/Widgets/new_collection_button.dart';
 import '../common/Widgets/textfield.dart';
 
 class NewDairyExpenseScreen extends StatefulWidget {
-  const NewDairyExpenseScreen({super.key});
+  const NewDairyExpenseScreen({
+    super.key,
+    required this.isEdit,
+  });
+
+  final bool isEdit;
 
   @override
   State<NewDairyExpenseScreen> createState() => _NewDairyExpenseScreenState();
@@ -21,7 +27,7 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'New DAiry Expense',
+          title: 'New Dairy Expense',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -57,10 +63,15 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
             horizontal: 16,
             vertical: 20,
           ),
-          child: EditCollectionButton(
-            onDeletePressed: () {},
-            onSavePressed: () {},
-          ),
+          child: widget.isEdit
+              ? EditCollectionButton(
+                  onDeletePressed: () {},
+                  onSavePressed: () {},
+                )
+              : NewCollectionButton(
+                  title: 'Save and Send to Customer',
+                  onPressed: () {},
+                ),
         ),
       ),
     );

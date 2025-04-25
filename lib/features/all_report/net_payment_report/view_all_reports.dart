@@ -1,4 +1,3 @@
-import 'package:dairy_app/features/common/Widgets/date_picker.dart';
 import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +41,7 @@ class ViewAllReports extends StatelessWidget {
       milkReport: [
         MilkReport(id: '126', name: 'Rohan Kale', milkReport: [
           MilkReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             shift: 'Morning',
             milk: '25',
             liter: '30',
@@ -52,7 +51,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '20000',
           ),
           MilkReportModel(
-            date: '24 Jan 2024',
+            date: '24 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -62,7 +61,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '40000',
           ),
           MilkReportModel(
-            date: '25 Jan 2024',
+            date: '25 Jan 2025',
             shift: 'Morning',
             milk: '20',
             liter: '25',
@@ -72,7 +71,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '250000',
           ),
           MilkReportModel(
-            date: '26 Jan 2024',
+            date: '26 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -82,7 +81,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '22282',
           ),
           MilkReportModel(
-            date: '27 Jan 2024',
+            date: '27 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -92,7 +91,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '22282',
           ),
           MilkReportModel(
-            date: '28 Jan 2024',
+            date: '28 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -102,7 +101,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '22282',
           ),
           MilkReportModel(
-            date: '29 Jan 2024',
+            date: '29 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -112,7 +111,7 @@ class ViewAllReports extends StatelessWidget {
             amount: '22282',
           ),
           MilkReportModel(
-            date: '30 Jan 2024',
+            date: '30 Jan 2025',
             shift: 'Evening',
             milk: '20',
             liter: '25',
@@ -126,56 +125,56 @@ class ViewAllReports extends StatelessWidget {
       cattleFeedReport: [
         CattleFeedReportItem(id: '126', name: 'Rohan Kale', cattleFeedReport: [
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
             amount: '22282',
           ),
           CattleFeedReportModel(
-            date: '23 Jan 2024',
+            date: '23 Jan 2025',
             feed: '10',
             qty: '82',
             rate: '25',
@@ -189,27 +188,27 @@ class ViewAllReports extends StatelessWidget {
           name: 'Rohan Kale',
           advAmtReportModel: [
             AdvAmtReportModel(
-              date: '23 Jan 2024',
+              date: '23 Jan 2025',
               advAmt: '20000',
               deductionAmt: '10000',
             ),
             AdvAmtReportModel(
-              date: '23 Jan 2024',
+              date: '23 Jan 2025',
               advAmt: '20000',
               deductionAmt: '10000',
             ),
             AdvAmtReportModel(
-              date: '23 Jan 2024',
+              date: '23 Jan 2025',
               advAmt: '20000',
               deductionAmt: '10000',
             ),
             AdvAmtReportModel(
-              date: '23 Jan 2024',
+              date: '23 Jan 2025',
               advAmt: '20000',
               deductionAmt: '10000',
             ),
             AdvAmtReportModel(
-              date: '23 Jan 2024',
+              date: '23 Jan 2025',
               advAmt: '20000',
               deductionAmt: '10000',
             ),
@@ -226,24 +225,41 @@ class ViewAllReports extends StatelessWidget {
       appBar:
           DefaultAppbar.defaultAppbar(title: 'All Reports', context: context),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: DatePicker(),
-            ),
-            const AllReportWidget(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: NetPaymentReportWidget(
-                advAmtHeaders: advAmtHeaders,
-                milkCollectionHeaders: milkReportHeaders,
-                cattleFeedHeaders: cattleFeedHeaders,
-                netPaymentReport: netPaymentReport,
-                index: 0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            children: [
+              Container(
+                color: const Color.fromRGBO(229, 240, 252, 1),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        '10 Jan 2025 to 20 Jan 2025',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            )
-          ],
+              const AllReportWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: NetPaymentReportWidget(
+                  advAmtHeaders: advAmtHeaders,
+                  milkCollectionHeaders: milkReportHeaders,
+                  cattleFeedHeaders: cattleFeedHeaders,
+                  netPaymentReport: netPaymentReport,
+                  index: 0,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
