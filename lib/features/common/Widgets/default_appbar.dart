@@ -71,17 +71,19 @@ class DefaultAppbar {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Text(
-              cell,
-              style: TextStyle(
-                  fontWeight:
-                      isHeader || isTotal ? FontWeight.bold : FontWeight.w400,
-                  color: isDisabled
-                      ? const Color.fromRGBO(127, 127, 127, 1)
-                      : Colors.black,
-                  fontSize: isHeader || isTotal ? 18 : 16,
-                  fontFamily: ''),
-              textAlign: index == 0 ? TextAlign.left : TextAlign.right,
+            child: Flexible(
+              child: Text(
+                cell,
+                style: TextStyle(
+                    fontWeight:
+                        isHeader || isTotal ? FontWeight.bold : FontWeight.w400,
+                    color: isDisabled
+                        ? const Color.fromRGBO(127, 127, 127, 1)
+                        : Colors.black,
+                    fontSize: isHeader || isTotal ? 18 : 16,
+                    fontFamily: ''),
+                textAlign: index == 0 ? TextAlign.left : TextAlign.right,
+              ),
             ),
           ),
         );

@@ -46,7 +46,7 @@ class CattleFeedRateScreen extends StatelessWidget {
             Table(
               columnWidths: const {
                 0: FlexColumnWidth(2),
-                1: FlexColumnWidth(1),
+                1: FlexColumnWidth(2),
                 2: FlexColumnWidth(1),
               },
               children: [
@@ -72,6 +72,7 @@ class CattleFeedRateScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 color: Color.fromRGBO(127, 127, 127, 1),
                               ),
+                              textAlign: TextAlign.right,
                             ),
                             GestureDetector(
                               onTap: () {},

@@ -224,12 +224,14 @@ class ExpenseDataRow extends StatelessWidget {
                   ],
                 ),
               ),
-              const Text(
-                '01 Jan 2024  Morning 09:25AM',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color.fromRGBO(92, 92, 92, 1),
+              const Flexible(
+                child: Text(
+                  '01 Jan 2024  Morning 09:25AM',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromRGBO(92, 92, 92, 1),
+                  ),
                 ),
               ),
               const SizedBox(

@@ -166,7 +166,7 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
-                    title: 'Save and Send to Customer',
+                    title: 'Save',
                     onPressed: () {},
                   ),
           ),

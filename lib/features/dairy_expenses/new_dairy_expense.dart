@@ -69,7 +69,7 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
                   onSavePressed: () {},
                 )
               : NewCollectionButton(
-                  title: 'Save and Send to Customer',
+                  title: 'Save',
                   onPressed: () {},
                 ),
         ),

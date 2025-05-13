@@ -83,28 +83,30 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      'By continuing, you agree to the',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Terms and Conditions',
+                FittedBox(
+                  child: Row(
+                    children: [
+                      const Text(
+                        'By continuing, you agree to the',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(0, 144, 255, 1),
+                          color: Colors.black,
                         ),
                       ),
-                    )
-                  ],
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Terms and Conditions',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(0, 144, 255, 1),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

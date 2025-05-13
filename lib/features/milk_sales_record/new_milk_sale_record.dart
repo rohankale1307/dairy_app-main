@@ -136,7 +136,7 @@ class _NewMilkSaleRecordScreenState extends State<NewMilkSaleRecordScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
-                    title: 'Save and Send to Customer',
+                    title: 'Save',
                     onPressed: () {},
                   ),
           ),

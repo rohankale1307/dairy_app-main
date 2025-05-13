@@ -83,14 +83,20 @@ class NewCustomerWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Row(
                 children: [
-                  Text(
-                    '125',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  Flexible(
+                    child: Text(
+                      '125',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
                   ),
                   SizedBox(width: 16),
-                  Text(
-                    'Rohan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  Flexible(
+                    child: Text(
+                      'Rohan',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ],
               ),

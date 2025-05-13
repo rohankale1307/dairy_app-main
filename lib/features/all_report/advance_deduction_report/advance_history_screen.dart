@@ -77,12 +77,14 @@ class AdvanceHistoryScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
             children: [
-              Text(
-                '10 Jan 2025 to 20 Jan 2025',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+              Flexible(
+                child: Text(
+                  '10 Jan 2025 to 20 Jan 2025',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
                 ),
               )
             ],

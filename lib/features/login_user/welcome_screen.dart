@@ -116,8 +116,10 @@ class WelcomeScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontFamily: 'FigTree',
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          Icon(icon)
+          FittedBox(child: Icon(icon))
         ],
       ),
     );

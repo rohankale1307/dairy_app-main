@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../model/dairy_app_model.dart';
 
@@ -30,10 +31,7 @@ class MilkCollectionReportWidget extends StatelessWidget {
             child: isShowName
                 ? Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 20,
-                        ),
+                      Flexible(
                         child: Text(
                           milkReport[index].id,
                           style: const TextStyle(
@@ -42,13 +40,16 @@ class MilkCollectionReportWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        milkReport[index].name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: Text(
+                          milkReport[index].name,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 2,
                         ),
-                        maxLines: 2,
                       ),
                     ],
                   )
@@ -71,14 +72,22 @@ class MilkCollectionReportWidget extends StatelessWidget {
           ),
         ),
         Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ...firstColumnHeaders.map(
                   (head) => Container(
-                    constraints:
-                        const BoxConstraints(maxWidth: 100, minWidth: 100),
+                    alignment: Alignment.centerLeft,
+                    constraints: const BoxConstraints(
+                      maxWidth: 80,
+                      minWidth: 80,
+                      minHeight: 50,
+                      maxHeight: 50,
+                    ),
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(245, 245, 245, 1),
@@ -100,17 +109,24 @@ class MilkCollectionReportWidget extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     ...List.generate(
                       milkReport[index].milkReport.length,
                       (headIndex) {
                         return Column(
-                          mainAxisSize: MainAxisSize.min,
                           children: [
                             ...List.generate(
                               firstColumnHeaders.length,
                               (valueIndex) => Container(
-                                width: MediaQuery.sizeOf(context).width / 3,
+                                alignment: Alignment.center,
+                                constraints: const BoxConstraints(
+                                  minHeight: 50,
+                                  maxHeight: 50,
+                                  minWidth: 120,
+                                  maxWidth: 120,
+                                ),
                                 padding: const EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,

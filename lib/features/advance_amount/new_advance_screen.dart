@@ -83,7 +83,7 @@ class _NewAdvanceScreenState extends State<NewAdvanceScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
-                    title: 'Save and Send to Customer',
+                    title: 'Save',
                     onPressed: () {},
                   ),
           ),

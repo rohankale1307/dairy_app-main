@@ -33,25 +33,30 @@ class CattleFeedReportWidget extends StatelessWidget {
             child: isShowName
                 ? Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 20,
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: 20,
+                          ),
+                          child: Text(
+                            cattleFeedReport[index].id,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
                         child: Text(
-                          cattleFeedReport[index].id,
+                          cattleFeedReport[index].name,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
+                          maxLines: 2,
                         ),
-                      ),
-                      Text(
-                        cattleFeedReport[index].name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        maxLines: 2,
                       ),
                     ],
                   )
@@ -77,11 +82,17 @@ class CattleFeedReportWidget extends StatelessWidget {
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ...firstColumnHeaders.map(
                   (head) => Container(
-                    constraints:
-                        const BoxConstraints(maxWidth: 100, minWidth: 100),
+                    constraints: const BoxConstraints(
+                      maxWidth: 80,
+                      minWidth: 80,
+                      minHeight: 50,
+                      maxHeight: 50,
+                    ),
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(245, 245, 245, 1),
@@ -113,7 +124,13 @@ class CattleFeedReportWidget extends StatelessWidget {
                             ...List.generate(
                               firstColumnHeaders.length,
                               (valueIndex) => Container(
-                                width: MediaQuery.sizeOf(context).width / 3,
+                                alignment: Alignment.center,
+                                constraints: const BoxConstraints(
+                                  minHeight: 50,
+                                  maxHeight: 50,
+                                  minWidth: 120,
+                                  maxWidth: 120,
+                                ),
                                 padding: const EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,

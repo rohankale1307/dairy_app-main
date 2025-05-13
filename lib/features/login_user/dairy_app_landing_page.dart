@@ -159,29 +159,31 @@ class DairyAppLandingPage extends StatelessWidget {
                 ),
               );
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Watch video tutorials to get started',
-                  style: TextStyle(
-                    color: Color.fromRGBO(25, 25, 25, 1),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+            child: FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Watch video tutorials to get started',
+                    style: TextStyle(
+                      color: Color.fromRGBO(25, 25, 25, 1),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CommingSoonPage(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.arrow_forward_rounded),
-                ),
-              ],
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CommingSoonPage(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_forward_rounded),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -207,34 +209,37 @@ class CatlogCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: 1000,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(245, 245, 245, 1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage(
-                  'assets/images/$imagePath',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
+          child: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(
+                    'assets/images/$imagePath',
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

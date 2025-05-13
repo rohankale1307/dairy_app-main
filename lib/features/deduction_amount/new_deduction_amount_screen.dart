@@ -83,7 +83,7 @@ class _NewDeductionScreenState extends State<NewDeductionScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
-                    title: 'Save and Send to Customer',
+                    title: 'Save',
                     onPressed: () {},
                   ),
           ),

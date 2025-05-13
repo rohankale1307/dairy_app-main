@@ -76,7 +76,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                   onSavePressed: () {},
                 )
               : NewCollectionButton(
-                  title: 'Save and Send to Customer',
+                  title: 'Save',
                   onPressed: () {},
                 ),
         ),
