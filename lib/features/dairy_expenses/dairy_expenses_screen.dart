@@ -100,7 +100,7 @@ class DairyExpensesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DefaultAppbar.defaultAppbar(
-        title: ' Dairy Expenses',
+        title: ' Dairy expenses',
         context: context,
         isShowDatePicker: true,
         isShowSearchIcon: true,

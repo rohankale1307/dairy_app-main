@@ -1,3 +1,4 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 class DefaultAppbar {
@@ -21,11 +22,11 @@ class DefaultAppbar {
         if (isShowDatePicker)
           IconButton(
             onPressed: () async {
-              final data = await showDateRangePicker(
-                context: context,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(3000),
-              );
+              // final data = await showDateRangePicker(
+              //   context: context,
+              //   firstDate: DateTime(2000),
+              //   lastDate: DateTime(3000),
+              // );
             },
             icon: const Icon(Icons.date_range_outlined),
           )
@@ -108,6 +109,59 @@ class DefaultAppbar {
           ),
         );
       }).toList(),
+    );
+  }
+
+  static Widget dottedLineWidget() {
+    return const DottedLine(
+      dashColor: Color.fromRGBO(191, 191, 191, 0.7),
+      dashLength: 10,
+      dashGapLength: 2,
+    );
+  }
+
+  static Widget buildRowWidget({
+    required String title,
+    required int amount,
+    bool isTotal = false,
+  }) {
+    return Container(
+      color: isTotal ? const Color.fromRGBO(245, 245, 245, 1) : null,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: isTotal
+                        ? Colors.black
+                        : const Color.fromRGBO(127, 127, 127, 0.5),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Text(
+                amount.toString(),
+                style: TextStyle(
+                  color: isTotal
+                      ? Colors.black
+                      : const Color.fromRGBO(127, 127, 127, 0.5),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

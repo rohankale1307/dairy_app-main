@@ -107,7 +107,7 @@ class _CattleFieldScreenState extends State<CattleFieldScreen> {
           ],
         ),
         floatingActionButton: Buttons.addCollectionButton(
-          title: tabIndex == 0 ? 'Add Sales' : 'New Cattle Feed',
+          title: tabIndex == 0 ? 'New sale' : 'New cattle feed',
           onPressed: () {
             if (tabIndex == 0) {
               Navigator.push(

@@ -34,7 +34,7 @@ class RegisterScreen extends StatelessWidget {
                 textFieldWidget(
                   lable: 'Phone Number',
                   prefixText: '+91 ',
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   maxLength: 10,
                 ),
                 Padding(

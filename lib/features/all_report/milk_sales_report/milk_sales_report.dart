@@ -405,10 +405,14 @@ class MilkSalesReport extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Table(
+                    border: const TableBorder(
+                      top: BorderSide(color: Colors.black, width: 1),
+                      bottom: BorderSide(color: Colors.black, width: 1),
+                    ),
                     columnWidths: const {
                       0: FlexColumnWidth(2),
-                      1: FlexColumnWidth(1),
-                      2: FlexColumnWidth(2),
+                      1: IntrinsicColumnWidth(flex: 2),
+                      2: IntrinsicColumnWidth(),
                     },
                     children: [
                       DefaultAppbar.buildRow(['Milk', 'Liter', 'Amount'],

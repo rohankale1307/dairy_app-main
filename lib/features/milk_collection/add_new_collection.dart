@@ -53,7 +53,7 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Add New Collection',
+          title: widget.isEdit ? 'Edit collection' : 'New collection',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -112,7 +112,7 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
                     controller: dateTimeController,
-                    lableText: 'Date-Time',
+                    lableText: 'Date',
                   ),
                 ),
                 TextFieldWidget(

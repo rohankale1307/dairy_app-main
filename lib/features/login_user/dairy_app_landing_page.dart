@@ -8,6 +8,7 @@ import '../customer_data/customer_data_screen.dart';
 import '../dairy_expenses/dairy_expenses_screen.dart';
 import '../deduction_amount/deduction_amount_screen.dart';
 import '../milk_collection/milk_collection_screen.dart';
+import '../milk_sales_record/milk_record_screen.dart';
 
 class DairyAppLandingPage extends StatelessWidget {
   DairyAppLandingPage({super.key});
@@ -62,7 +63,7 @@ class DairyAppLandingPage extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MilkCollectionScreen(),
+          builder: (context) => const MilkRecordScreen(),
         ),
       );
     } else if (categoryName == 'Dairy Expenses') {
@@ -107,21 +108,26 @@ class DairyAppLandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: const Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+              'Name of the Dairy',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Color.fromRGBO(30, 30, 30, 1),
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Text(
-                  'Name of the Dairy',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
               GridView.builder(
                 shrinkWrap: true,
                 itemCount: catlogCardList.length,

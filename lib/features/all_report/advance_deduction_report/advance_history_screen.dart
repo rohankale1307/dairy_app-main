@@ -102,7 +102,7 @@ class AdvanceHistoryScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          color: const Color.fromRGBO(245, 245, 245, 1),
+          color: const Color.fromRGBO(229, 240, 252, 1),
           child: const Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 16,
@@ -138,20 +138,31 @@ class AdvanceHistoryScreen extends StatelessWidget {
             ),
           ),
         ),
-        BuildAdvanceRow(
-          title: 'Total Advance',
-          value: advAmt,
-          isTotal: false,
-        ),
-        BuildAdvanceRow(
-          title: 'Total Deduction',
-          value: dedAmt,
-          isTotal: false,
-        ),
-        BuildAdvanceRow(
-          title: 'Total Advance Balance',
-          value: totalAdvAmt,
-          isTotal: true,
+        Container(
+          decoration: const BoxDecoration(
+            border: Border.symmetric(
+              horizontal: BorderSide(color: Colors.black),
+            ),
+          ),
+          child: Column(
+            children: [
+              BuildAdvanceRow(
+                title: 'Total Advance',
+                value: advAmt,
+                isTotal: false,
+              ),
+              BuildAdvanceRow(
+                title: 'Total Deduction',
+                value: dedAmt,
+                isTotal: false,
+              ),
+              BuildAdvanceRow(
+                title: 'Total Advance Balance',
+                value: totalAdvAmt,
+                isTotal: true,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -159,13 +170,17 @@ class AdvanceHistoryScreen extends StatelessWidget {
 
   Widget dataTable(List<AdvanceDeductionData> data) {
     return Table(
+      border: const TableBorder(
+        top: BorderSide(color: Colors.black, width: 1),
+        bottom: BorderSide(color: Colors.black, width: 1),
+      ),
       columnWidths: const {
         0: FlexColumnWidth(2),
-        1: FlexColumnWidth(2),
-        2: FlexColumnWidth(2),
+        1: IntrinsicColumnWidth(),
+        2: IntrinsicColumnWidth(),
       },
       children: [
-        DefaultAppbar.buildRow(['Date', 'Deduction', 'Advance'],
+        DefaultAppbar.buildRow(['Date', 'Deduction', 'New advance'],
             isHeader: true),
         ...data
             .map((data) => DefaultAppbar.buildRow(

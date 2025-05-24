@@ -29,7 +29,8 @@ class _AddNewCattleFeedSaleState extends State<AddNewCattleFeedSale> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'New Cattle Feed Sale',
+          title:
+              widget.isEdit ? 'Edit cattle feed sale' : 'New cattle feed sale',
           context: context,
         ),
         body: SingleChildScrollView(

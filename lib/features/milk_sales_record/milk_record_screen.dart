@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../common/Widgets/button_widget.dart';
 import '../common/Widgets/collection_card_widget.dart';
-import '../common/Widgets/date_picker.dart';
 import '../common/Widgets/default_appbar.dart';
 import '../common/model/dairy_app_model.dart';
 
@@ -94,7 +93,7 @@ class _MilkRecordScreenState extends State<MilkRecordScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Collection',
+          title: 'Milk sales records',
           context: context,
           isShowDatePicker: true,
           isShowSearchIcon: true,
@@ -102,21 +101,40 @@ class _MilkRecordScreenState extends State<MilkRecordScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 12,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  color: const Color.fromRGBO(229, 240, 252, 1),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '10 Jan 2025 to 20 Jan 2025',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                child: DatePicker(),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Table(
+                  border: const TableBorder(
+                    top: BorderSide(color: Colors.black, width: 1),
+                    bottom: BorderSide(color: Colors.black, width: 1),
+                  ),
                   columnWidths: const {
                     0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(1),
-                    2: FlexColumnWidth(2),
+                    1: IntrinsicColumnWidth(flex: 2),
+                    2: IntrinsicColumnWidth(),
                   },
                   children: [
                     DefaultAppbar.buildRow(['Milk', 'Liter', 'Amount'],

@@ -100,7 +100,12 @@ class _AdvanceAmountScreenState extends State<AdvanceAmountScreen> {
                   bottom: 30,
                 ),
                 child: Container(
-                  color: const Color.fromRGBO(245, 245, 245, 1),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(245, 245, 245, 1),
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.black),
+                    ),
+                  ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 8,
@@ -109,20 +114,24 @@ class _AdvanceAmountScreenState extends State<AdvanceAmountScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Total Adv Amount',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                        FittedBox(
+                          child: Text(
+                            'Total Adv Amount',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                        Text(
-                          '200000',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                        FittedBox(
+                          child: Text(
+                            '200000',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],

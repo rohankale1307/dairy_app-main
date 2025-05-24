@@ -27,7 +27,7 @@ class _NewAdvanceScreenState extends State<NewAdvanceScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'New Advance Amount',
+          title: widget.isEdit ? 'Edit advance details' : 'New advance',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -40,7 +40,7 @@ class _NewAdvanceScreenState extends State<NewAdvanceScreen> {
               children: [
                 TextFieldWidget(
                   controller: dateTimeController,
-                  lableText: 'Date-Time',
+                  lableText: 'Date',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),

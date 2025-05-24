@@ -1,6 +1,7 @@
 import 'package:dairy_app/features/all_report/advance_deduction_report/advance_deduction_report_screen.dart';
 import 'package:dairy_app/features/all_report/cattle_feed_report/cattle_feed_report.dart';
 import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 import 'milk_collection_report/milk_collection_report.dart';
@@ -56,7 +57,7 @@ class AllReportScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AdvanceDeductionReportScreen(),
+                    builder: (context) => const AdvanceDeductionReportScreen(),
                   ),
                 );
               },
@@ -109,31 +110,50 @@ class ReportHeadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
         children: [
-          Flexible(
+          GestureDetector(
+            onTap: onPressed,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-                maxLines: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Image.asset('assets/images/$image'),
+                  ),
+                ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Image.asset('assets/images/$image'),
+            padding: const EdgeInsets.only(top: 10),
+            child: dottedLineWidget(),
           ),
         ],
       ),
     );
   }
+}
+
+Widget dottedLineWidget() {
+  return const DottedLine(
+    dashColor: Color.fromRGBO(191, 191, 191, 0.7),
+    dashLength: 10,
+    dashGapLength: 6,
+  );
 }

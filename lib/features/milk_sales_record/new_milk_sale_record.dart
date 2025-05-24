@@ -53,7 +53,7 @@ class _NewMilkSaleRecordScreenState extends State<NewMilkSaleRecordScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Add New Collection',
+          title: widget.isEdit ? 'Edit milk sale' : 'New milk sale',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -62,27 +62,38 @@ class _NewMilkSaleRecordScreenState extends State<NewMilkSaleRecordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Wrap(
-                  spacing: 10,
-                  children: List.generate(
-                    4,
-                    (index) => GestureDetector(
-                      onTap: () {
-                        toggleSelection(index);
-                      },
-                      child: ChipWidget(
-                          isSelected:
-                              (index < 2 && selectedFirstGroup == index) ||
-                                  (index >= 2 && selectedLastGroup == index),
-                          label: lables[index]),
-                    ),
-                  ),
-                ),
+                ...List.generate(2, (colIndex) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        2,
+                        (rowIndex) {
+                          final index = (colIndex * 1) * 2 + rowIndex;
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () => toggleSelection(index),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ChipWidget(
+                                    isSelected: (index < 2 &&
+                                            selectedFirstGroup == index) ||
+                                        (index >= 2 &&
+                                            selectedLastGroup == index),
+                                    label: lables[index]),
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  );
+                }),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
                     controller: dateTimeController,
-                    lableText: 'Date-Time',
+                    lableText: 'Date',
                   ),
                 ),
                 TextFieldWidget(

@@ -15,12 +15,12 @@ class MilkCollectionReport extends StatelessWidget {
       MilkData(
         type: 'cow',
         amount: 70000,
-        liter: 2000,
+        liter: 2000000,
       ),
       MilkData(
         type: 'Buffalo',
         amount: 120000,
-        liter: 3000,
+        liter: 3000000,
       ),
     ];
     List<String> firstColumnHeaders = [
@@ -406,10 +406,14 @@ class MilkCollectionReport extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Table(
+                  border: const TableBorder(
+                    top: BorderSide(color: Colors.black, width: 1),
+                    bottom: BorderSide(color: Colors.black, width: 1),
+                  ),
                   columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(1),
-                    2: FlexColumnWidth(2),
+                    0: FlexColumnWidth(1),
+                    1: IntrinsicColumnWidth(),
+                    2: IntrinsicColumnWidth(),
                   },
                   children: [
                     DefaultAppbar.buildRow(['Milk', 'Liter', 'Amount'],

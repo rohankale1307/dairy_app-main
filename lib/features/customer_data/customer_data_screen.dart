@@ -12,7 +12,7 @@ class CustomerDataScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DefaultAppbar.defaultAppbar(
-        title: 'Customer List',
+        title: 'Customers',
         context: context,
         isShowDatePicker: true,
         isShowSearchIcon: true,

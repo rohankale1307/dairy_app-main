@@ -100,32 +100,43 @@ class _DeductionAmountScreenState extends State<DeductionAmountScreen> {
                   bottom: 40,
                 ),
                 child: Container(
-                  color: const Color.fromRGBO(245, 245, 245, 1),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(245, 245, 245, 1),
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.black),
+                    ),
+                  ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 8,
                       horizontal: 16,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total Deduction Amount',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                    child: Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Total Deduction Amount',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '200000',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                          Text(
+                            '200000',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

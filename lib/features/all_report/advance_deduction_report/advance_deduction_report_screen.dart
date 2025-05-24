@@ -4,9 +4,18 @@ import 'package:flutter/material.dart';
 import '../../common/model/dairy_app_model.dart';
 import 'advance_tab_bar.dart';
 
-class AdvanceDeductionReportScreen extends StatelessWidget {
-  AdvanceDeductionReportScreen({super.key});
+class AdvanceDeductionReportScreen extends StatefulWidget {
+  const AdvanceDeductionReportScreen({super.key});
 
+  @override
+  State<AdvanceDeductionReportScreen> createState() =>
+      _AdvanceDeductionReportScreenState();
+}
+
+class _AdvanceDeductionReportScreenState
+    extends State<AdvanceDeductionReportScreen> {
+  bool isPaid = true;
+  bool isUnpaid = false;
   final List<AdvanceAndDeductionReport> reportList = [
     AdvanceAndDeductionReport(
         id: '120', name: 'Rohan Kale', totalAdvAmt: 10000, totalDedAmt: 9000),
@@ -38,6 +47,8 @@ class AdvanceDeductionReportScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              paidCheckBox(),
+              unpaidCheckBox(),
               Container(
                 color: const Color.fromRGBO(229, 240, 252, 1),
                 child: const Padding(
@@ -58,40 +69,33 @@ class AdvanceDeductionReportScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BuildAdvanceRow(
-                      title: 'Total Advance',
-                      value: 20000,
-                      isTotal: false,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.black),
                     ),
-                    BuildAdvanceRow(
-                      title: 'Total Deduction',
-                      value: 20000,
-                      isTotal: false,
-                    ),
-                    BuildAdvanceRow(
-                      title: 'Total Advance Balance',
-                      value: 20000,
-                      isTotal: true,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                color: const Color.fromRGBO(255, 249, 229, 1),
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '''The date filter (10 Jan 2025  to  20 Jan 2025 ) does not apply to the statements below. The date filter will be applicable to only the Total table above. The total advance amount shown in above table is from statements/cards where the advance balance is above ₹ 0.''',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
+                  ),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      BuildAdvanceRow(
+                        title: 'Total Advance',
+                        value: 20000,
+                        isTotal: false,
+                      ),
+                      BuildAdvanceRow(
+                        title: 'Total Deduction',
+                        value: 20000,
+                        isTotal: false,
+                      ),
+                      BuildAdvanceRow(
+                        title: 'Total Advance Balance',
+                        value: 20000,
+                        isTotal: true,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -118,6 +122,80 @@ class AdvanceDeductionReportScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget paidCheckBox() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Checkbox(
+            value: isPaid,
+            onChanged: (final isChecked) {
+              setState(() {
+                isUnpaid = !isUnpaid;
+                isPaid = isChecked ?? false;
+              });
+            },
+            activeColor: Colors.black,
+            checkColor: Colors.white,
+            side: const BorderSide(color: Colors.black),
+          ),
+          const Flexible(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(
+                'Show total adv, total deduction and total adv balance of paid and unpaid statements',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget unpaidCheckBox() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          Checkbox(
+            value: isUnpaid,
+            onChanged: (final isChecked) {
+              setState(() {
+                isPaid = !isPaid;
+                isUnpaid = isChecked ?? false;
+              });
+            },
+            activeColor: Colors.black,
+            checkColor: Colors.white,
+            side: const BorderSide(color: Colors.black),
+          ),
+          const Flexible(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Show total adv, total deduction and total adv balance of only unpaid statements',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -311,44 +389,44 @@ class BuildAdvanceRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4,
-                horizontal: 16,
-              ),
-              child: Text(
-                title,
-                style: !isTotal
-                    ? const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(127, 127, 127, 1),
-                      )
-                    : const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                child: Text(
+                  title,
+                  style: !isTotal
+                      ? const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(127, 127, 127, 1),
+                        )
+                      : const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4,
-                horizontal: 16,
-              ),
-              child: Text(
-                value.toString(),
-                style: !isTotal
-                    ? const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(127, 127, 127, 1),
-                      )
-                    : const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
+                child: Text(
+                  value.toString(),
+                  style: !isTotal
+                      ? const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(127, 127, 127, 1),
+                        )
+                      : const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                ),
               ),
             ),
           ],

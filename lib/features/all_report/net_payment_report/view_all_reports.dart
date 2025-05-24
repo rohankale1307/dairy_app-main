@@ -237,7 +237,7 @@ class ViewAllReports extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '10 Jan 2025 to 20 Jan 2025',
+                          '11 Jan 2025 to 20 Jan 2025',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -275,75 +275,72 @@ class AllReportWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.transparent,
-          border: Border.all(
-            width: 2,
-            color: const Color.fromRGBO(207, 207, 207, 1),
-          )),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Container(
-                  color: const Color.fromRGBO(199, 237, 217, 1),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 9,
-                      horizontal: 16,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          '126',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Text(
-                          'Rohan Kale',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                color: const Color.fromRGBO(229, 240, 252, 1),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 9,
+                    horizontal: 16,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
+                  child: Row(
                     children: [
-                      buildCardRow(
-                        title: 'Total Milk Amt',
-                        amount: '20000',
+                      Text(
+                        '126',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      buildCardRow(
-                        title: 'Total Cattle Feed Amt',
-                        amount: '20000',
-                      ),
-                      buildCardRow(
-                        title: 'Total Deduction Amt',
-                        amount: '20000',
-                      ),
-                      buildCardRow(
-                        title: 'Total Net Payment',
-                        amount: '20000',
+                      SizedBox(width: 16),
+                      Text(
+                        'Rohan Kale',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: Colors.black),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    DefaultAppbar.buildRowWidget(
+                      title: 'Total Milk Amt',
+                      amount: 20000,
+                    ),
+                    DefaultAppbar.buildRowWidget(
+                      title: 'Total Cattle Feed Amt',
+                      amount: 20000,
+                    ),
+                    DefaultAppbar.buildRowWidget(
+                      title: 'Total Deduction Amt',
+                      amount: 20000,
+                    ),
+                    DefaultAppbar.buildRowWidget(
+                      title: 'Total Net Payment',
+                      amount: 20000,
+                      isTotal: true,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

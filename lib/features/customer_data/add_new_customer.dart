@@ -26,7 +26,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Add New Customer',
+          title: widget.isEdit ? 'Edit customers details' : 'New customer',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -46,19 +46,27 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                 ),
                 TextFieldWidget(
                   controller: customerNameController,
-                  lableText: 'Customer Name',
+                  lableText: 'Customer name',
                   textInputType: TextInputType.name,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TextFieldWidget(
+                    controller: customerNameController,
+                    lableText: 'Customer nickname',
+                    textInputType: TextInputType.name,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
                     controller: joiningDateController,
-                    lableText: 'Joining Date',
+                    lableText: 'Joining date',
                   ),
                 ),
                 TextFieldWidget(
                   controller: phoneNumController,
-                  lableText: 'Phone Number',
+                  lableText: 'Phone number',
                   textInputType: TextInputType.name,
                 ),
               ],

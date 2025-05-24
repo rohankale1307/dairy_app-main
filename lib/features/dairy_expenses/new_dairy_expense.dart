@@ -26,8 +26,9 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'New Dairy Expense',
+          title: widget.isEdit ? 'Edit expense' : 'New expense',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -40,7 +41,7 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
               children: [
                 TextFieldWidget(
                   controller: dateTimeController,
-                  lableText: 'Date-Time',
+                  lableText: 'Date',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),

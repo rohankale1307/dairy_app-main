@@ -78,23 +78,27 @@ class NetPaymentReport extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.black),
+                    ),
+                  ),
                   child: Column(
                     children: [
-                      buildRow(
+                      DefaultAppbar.buildRowWidget(
                         title: 'Total Milk Amt',
                         amount: 20000,
                       ),
-                      buildRow(
+                      DefaultAppbar.buildRowWidget(
                         title: 'Total Cattle Feed Amt',
                         amount: 20000,
                       ),
-                      buildRow(
+                      DefaultAppbar.buildRowWidget(
                         title: 'Total Deduction Amt',
                         amount: 20000,
                       ),
-                      buildRow(
+                      DefaultAppbar.buildRowWidget(
                         title: 'Total Net Payment',
                         amount: 20000,
                         isTotal: true,
@@ -301,47 +305,6 @@ class AdvanceRow extends StatelessWidget {
   }
 }
 
-Widget buildRow({
-  required String title,
-  required int amount,
-  bool isTotal = false,
-}) {
-  return Container(
-    color: isTotal ? const Color.fromRGBO(127, 127, 127, 0.3) : null,
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: isTotal
-                    ? Colors.black
-                    : const Color.fromRGBO(127, 127, 127, 1),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              amount.toString(),
-              style: TextStyle(
-                color: isTotal
-                    ? Colors.black
-                    : const Color.fromRGBO(127, 127, 127, 1),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
 Widget buildCardRow({
   required String title,
   required String amount,
@@ -349,14 +312,20 @@ Widget buildCardRow({
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: Row(
+      textBaseline: TextBaseline.ideographic,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            color: Color.fromRGBO(127, 127, 127, 1),
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+        Flexible(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Color.fromRGBO(127, 127, 127, 1),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Text(

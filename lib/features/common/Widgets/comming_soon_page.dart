@@ -7,6 +7,7 @@ class CommingSoonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: DefaultAppbar.defaultAppbar(title: 'Dairy App', context: context),
       body: const Column(
         mainAxisAlignment: MainAxisAlignment.center,

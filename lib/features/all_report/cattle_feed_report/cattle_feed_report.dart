@@ -323,10 +323,14 @@ class CattleFeedReport extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Table(
+                  border: const TableBorder(
+                    top: BorderSide(color: Colors.black, width: 1),
+                    bottom: BorderSide(color: Colors.black, width: 1),
+                  ),
                   columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(1),
-                    2: FlexColumnWidth(2),
+                    0: FlexColumnWidth(1),
+                    1: IntrinsicColumnWidth(),
+                    2: IntrinsicColumnWidth(),
                   },
                   children: [
                     DefaultAppbar.buildRow(['Feed Name', 'Qty', 'Amount'],

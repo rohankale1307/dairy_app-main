@@ -25,7 +25,8 @@ class _AddNewCattleFeedRateState extends State<AddNewCattleFeedRate> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DefaultAppbar.defaultAppbar(
-          title: 'Add new cattle feed', context: context),
+          title: widget.isEdit ? 'Edit new cattle feed' : 'Add new cattle feed',
+          context: context),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 20,

@@ -27,7 +27,7 @@ class _NewDeductionScreenState extends State<NewDeductionScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'New Deduction Amount',
+          title: widget.isEdit ? 'Edit deduction' : 'New deduction',
           context: context,
         ),
         body: SingleChildScrollView(
@@ -40,7 +40,7 @@ class _NewDeductionScreenState extends State<NewDeductionScreen> {
               children: [
                 TextFieldWidget(
                   controller: dateTimeController,
-                  lableText: 'Date-Time',
+                  lableText: 'Date',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),

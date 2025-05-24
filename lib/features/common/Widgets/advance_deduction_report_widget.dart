@@ -70,89 +70,96 @@ class AdvanceDeductionReportWidget extends StatelessWidget {
                   ),
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...firstColumnHeaders.map(
-                  (head) => Container(
-                    alignment: Alignment.centerLeft,
-                    constraints: const BoxConstraints(
-                      maxWidth: 80,
-                      minWidth: 80,
-                      minHeight: 50,
-                      maxHeight: 50,
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(245, 245, 245, 1),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Text(
-                      head,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
+        Container(
+          decoration: const BoxDecoration(
+            border: Border.symmetric(
+              horizontal: BorderSide(color: Colors.black),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...firstColumnHeaders.map(
+                    (head) => Container(
+                      alignment: Alignment.centerLeft,
+                      constraints: const BoxConstraints(
+                        maxWidth: 100,
+                        minWidth: 100,
+                        minHeight: 50,
+                        maxHeight: 50,
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(245, 245, 245, 1),
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: Text(
+                        head,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...List.generate(
-                      advAmtReport[index].advAmtReportModel.length,
-                      (headIndex) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ...List.generate(
-                              firstColumnHeaders.length,
-                              (valueIndex) => Container(
-                                alignment: Alignment.center,
-                                constraints: const BoxConstraints(
-                                  minHeight: 50,
-                                  maxHeight: 50,
-                                  minWidth: 120,
-                                  maxWidth: 120,
-                                ),
-                                padding: const EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                child: Text(
-                                  getAdvAmtColumnValue(
-                                    valueIndex,
-                                    advAmtReport[index]
-                                        .advAmtReportModel[headIndex],
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...List.generate(
+                        advAmtReport[index].advAmtReportModel.length,
+                        (headIndex) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ...List.generate(
+                                firstColumnHeaders.length,
+                                (valueIndex) => Container(
+                                  alignment: Alignment.center,
+                                  constraints: const BoxConstraints(
+                                    minHeight: 50,
+                                    maxHeight: 50,
+                                    minWidth: 120,
+                                    maxWidth: 120,
                                   ),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.grey),
+                                  ),
+                                  child: Text(
+                                    getAdvAmtColumnValue(
+                                      valueIndex,
+                                      advAmtReport[index]
+                                          .advAmtReportModel[headIndex],
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ],
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

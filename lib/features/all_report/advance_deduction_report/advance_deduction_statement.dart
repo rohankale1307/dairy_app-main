@@ -60,120 +60,129 @@ class _AdvanceDeductionStatementState extends State<AdvanceDeductionStatement> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  color: const Color.fromRGBO(245, 245, 245, 1),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 9,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '125',
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                color: const Color.fromRGBO(229, 240, 252, 1),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 9,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '125',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Rohan Kale',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black,
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                'Rohan Kale',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.lock,
-                          size: 20,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const BuildAdvanceRow(
-                title: 'Total Advance',
-                value: 10000,
-                isTotal: false,
-              ),
-              const BuildAdvanceRow(
-                title: 'Total Deduction',
-                value: 10000,
-                isTotal: false,
-              ),
-              const BuildAdvanceRow(
-                title: 'Total Advance Balance',
-                value: 10000,
-                isTotal: true,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                ),
-                child: TextButton(
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(
-                        const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4),
                           ),
-                        ),
+                        ],
                       ),
-                      backgroundColor:
-                          const WidgetStatePropertyAll(Colors.black)),
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      'Close Advance and Deduction Statement',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(2),
-                  2: FlexColumnWidth(2),
-                },
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border.symmetric(
+                  horizontal: BorderSide(color: Colors.black),
+                ),
+              ),
+              child: const Column(
                 children: [
-                  DefaultAppbar.buildRow(['Date', 'Deduction', 'Advance'],
-                      isHeader: true),
-                  ...data
-                      .map((data) => DefaultAppbar.buildRow([
-                            data.date,
-                            '₹ ${data.deduction}',
-                            '₹ ${data.newAdvance}'
-                          ], isDisabled: true))
-                      .toList(),
+                  BuildAdvanceRow(
+                    title: 'Total Advance',
+                    value: 10000,
+                    isTotal: false,
+                  ),
+                  BuildAdvanceRow(
+                    title: 'Total Deduction',
+                    value: 10000,
+                    isTotal: false,
+                  ),
+                  BuildAdvanceRow(
+                    title: 'Total Advance Balance',
+                    value: 10000,
+                    isTotal: true,
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 16,
+              ),
+              child: TextButton(
+                style: ButtonStyle(
+                    shape: WidgetStateProperty.all(
+                      const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                    ),
+                    backgroundColor:
+                        const WidgetStatePropertyAll(Colors.black)),
+                onPressed: () {},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    'Close current statement',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Table(
+              border: const TableBorder(
+                top: BorderSide(color: Colors.black, width: 1),
+                bottom: BorderSide(color: Colors.black, width: 1),
+              ),
+              columnWidths: const {
+                0: FlexColumnWidth(2),
+                1: IntrinsicColumnWidth(),
+                2: IntrinsicColumnWidth(),
+              },
+              children: [
+                DefaultAppbar.buildRow(['Date', 'Deduction', 'New advance'],
+                    isHeader: true),
+                ...data
+                    .map((data) => DefaultAppbar.buildRow([
+                          data.date,
+                          '₹ ${data.deduction}',
+                          '₹ ${data.newAdvance}'
+                        ], isDisabled: true))
+                    .toList(),
+              ],
+            ),
+          ],
         ),
       ),
     );

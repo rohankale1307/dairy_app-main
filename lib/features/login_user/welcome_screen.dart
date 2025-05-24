@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 child: titleWithImage(
                   title: 'Login to My Dairy',
-                  icon: Icons.logout,
+                  icon: Icons.login_rounded,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -108,16 +108,18 @@ class WelcomeScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Color.fromRGBO(25, 25, 25, 1),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'FigTree',
+          Flexible(
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: Color.fromRGBO(25, 25, 25, 1),
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'FigTree',
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
           ),
           FittedBox(child: Icon(icon))
         ],

@@ -81,7 +81,7 @@ class _AdvanceTabBarState extends State<AdvanceTabBar> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DefaultAppbar.defaultAppbar(
-          title: 'Advance & Deduction Statement',
+          title: 'Advance & deduction statement',
           context: context,
           isShowDatePicker: true,
           isShowSearchIcon: true,
