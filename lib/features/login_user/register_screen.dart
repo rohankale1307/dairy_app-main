@@ -1,8 +1,112 @@
-import 'package:dairy_app/features/login_user/dairy_app_landing_page.dart';
+import 'package:dairy_app/features/login_user/login_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController mobNoController = TextEditingController();
+  TextEditingController dairyNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController cnfPasswordController = TextEditingController();
+  late final DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    dbRef = FirebaseDatabase.instance.ref("users");
+    super.initState();
+  }
+
+  void registerUser({
+    required final String mobNo,
+    required final String dairyName,
+    required final String password,
+    required final String cnfPassword,
+  }) async {
+    final userDataMap = {
+      "mobileNo": mobNo,
+      "dairyName": dairyName,
+      "password": password,
+      "cnfPassword": cnfPassword,
+    };
+    DatabaseReference userRef = dbRef.child(mobNo);
+    final snapshot = await userRef.get();
+    if (snapshot.exists) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.purple,
+          duration: Duration(seconds: 1),
+          content: Center(
+            child: Text(
+              "User is Already Exist. Please Login",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.amber,
+              ),
+            ),
+          ),
+        ),
+      );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+        );
+      });
+    } else {
+      await userRef.set(userDataMap).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.purple,
+            duration: Duration(seconds: 1),
+            content: Center(
+              child: Text(
+                "User is Created. Please Login",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.amber,
+                ),
+              ),
+            ),
+          ),
+        );
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+          );
+        });
+      }).onError((error, s) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.purple,
+            duration: Duration(seconds: 1),
+            content: Center(
+              child: Text(
+                "Network Error. Please try After Some Time.",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.amber,
+                ),
+              ),
+            ),
+          ),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +136,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 textFieldWidget(
+                  controller: mobNoController,
                   lable: 'Phone Number',
                   prefixText: '+91 ',
                   keyboardType: TextInputType.number,
@@ -40,25 +145,28 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: textFieldWidget(
+                    controller: dairyNameController,
                     lable: 'Dairy Name',
                   ),
                 ),
                 textFieldWidget(
+                  controller: passwordController,
                   lable: 'Password',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: textFieldWidget(
+                    controller: cnfPasswordController,
                     lable: 'Confirm Password',
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DairyAppLandingPage(),
-                      ),
+                    registerUser(
+                      mobNo: mobNoController.text,
+                      dairyName: dairyNameController.text,
+                      password: passwordController.text,
+                      cnfPassword: cnfPasswordController.text,
                     );
                   },
                   style: ButtonStyle(
@@ -121,8 +229,10 @@ class RegisterScreen extends StatelessWidget {
     required final String lable,
     final String? prefixText,
     final int? maxLength,
+    required final TextEditingController controller,
   }) {
     return TextField(
+      controller: controller,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLength: maxLength,
       decoration: InputDecoration(

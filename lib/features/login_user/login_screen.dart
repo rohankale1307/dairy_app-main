@@ -1,9 +1,116 @@
+import 'package:dairy_app/features/login_user/register_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import 'dairy_app_landing_page.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController mobNoController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  late final DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    dbRef = FirebaseDatabase.instance.ref().child("users");
+    super.initState();
+  }
+
+  void loginUser({
+    required final String mobNo,
+    required final String password,
+  }) async {
+    Query query = dbRef.orderByChild('mobileNo').equalTo(mobNo);
+
+    DataSnapshot snapshot = await query.get();
+
+    if (snapshot.exists) {
+      bool found = false;
+      final users = snapshot.value as Map;
+
+      users.forEach((key, value) {
+        if (value['password'] == password) {
+          setState(() {
+            found = true;
+          });
+        }
+      });
+
+      if (found) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.purple,
+            duration: Duration(seconds: 1),
+            content: Center(
+              child: Text(
+                "User Loged in Successfully",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.amber,
+                ),
+              ),
+            ),
+          ),
+        );
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DairyAppLandingPage(),
+            ),
+          );
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.purple,
+            duration: Duration(seconds: 1),
+            content: Center(
+              child: Text(
+                "Invalid Login Details",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.amber,
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.purple,
+          duration: Duration(seconds: 1),
+          content: Center(
+            child: Text(
+              "User Not Registered",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.amber,
+              ),
+            ),
+          ),
+        ),
+      );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const RegisterScreen(),
+          ),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +140,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 textFieldWidget(
+                  controller: mobNoController,
                   lable: 'Phone Number',
                   prefixText: '+91 ',
                   keyboardType: TextInputType.phone,
@@ -41,16 +149,15 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: textFieldWidget(
+                    controller: passwordController,
                     lable: 'Password',
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DairyAppLandingPage(),
-                      ),
+                    loginUser(
+                      mobNo: mobNoController.text,
+                      password: passwordController.text,
                     );
                   },
                   style: ButtonStyle(
@@ -113,8 +220,10 @@ class LoginScreen extends StatelessWidget {
     required final String lable,
     final String? prefixText,
     final int? maxLength,
+    required final TextEditingController controller,
   }) {
     return TextField(
+      controller: controller,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLength: maxLength,
       decoration: InputDecoration(
