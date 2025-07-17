@@ -25,9 +25,15 @@ class _LoginScreenState extends State<LoginScreen> {
     required final String mobNo,
     required final String password,
   }) async {
+    late DataSnapshot snapshot;
     Query query = dbRef.orderByChild('mobileNo').equalTo(mobNo);
+     
+      snapshot = await query.get().onError((e,st){
 
-    DataSnapshot snapshot = await query.get();
+        print('E $e');
+        return snapshot;
+      });
+     
 
     if (snapshot.exists) {
       bool found = false;

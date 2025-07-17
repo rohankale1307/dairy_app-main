@@ -1,4 +1,5 @@
 import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../common/Widgets/chip_widget.dart';
@@ -26,6 +27,8 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
   TextEditingController fatController = TextEditingController();
   TextEditingController snfController = TextEditingController();
   TextEditingController rateController = TextEditingController();
+  TextEditingController dayTimeController = TextEditingController();
+  TextEditingController animalTypeController = TextEditingController();
 
   List<String> lables = [
     'Morning',
@@ -41,10 +44,71 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
     setState(() {
       if (index < 2) {
         selectedFirstGroup = (selectedFirstGroup == index) ? null : index;
+        dayTimeController.text = index == 0 ? 'Morning' : 'Evening';
       } else {
         selectedLastGroup = (selectedLastGroup == index) ? null : index;
+        animalTypeController.text = index == 2 ? 'Cow' : 'Buffalo';
       }
     });
+  }
+
+  void addMilkSales(String mobNo) async {
+    final date = dateTimeController.text.trim();
+    final code = codeController.text;
+    final name = customerNameController.text;
+    final liter = literController.text;
+    final fat = fatController.text;
+    final snf = snfController.text;
+    final rate = rateController.text;
+    final dayTime = dayTimeController.text;
+    final animalType = animalTypeController.text;
+
+    if (date.isEmpty ||
+        code.isEmpty ||
+        name.isEmpty ||
+        liter.isEmpty ||
+        fat.isEmpty ||
+        snf.isEmpty ||
+        rate.isEmpty ||
+        dayTime.isEmpty ||
+        animalType.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.purple,
+          duration: Duration(seconds: 1),
+          content: Center(
+            child: Text(
+              "Please fill all the required details",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.amber,
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      final dbRef = FirebaseDatabase.instance
+          .ref()
+          .child('users')
+          .child(mobNo)
+          .child('milkSales');
+
+      await dbRef.child(code).set({
+        'date': date,
+        'name': name,
+        'code': code,
+        'liter': liter,
+        'fat': fat,
+        'snf': snf,
+        'rate': rate,
+        'dayTime': dayTime,
+        'animalType': animalType,
+      });
+
+      print('Milk Sale Data Added Successfully !');
+    }
   }
 
   @override
@@ -167,7 +231,9 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                   )
                 : NewCollectionButton(
                     title: 'Save',
-                    onPressed: () {},
+                    onPressed: () {
+                      addMilkSales('7058426247');
+                    },
                   ),
           ),
         ),
