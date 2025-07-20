@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../model/dairy_app_model.dart';
-
 class CollectionCardWidget extends StatelessWidget {
   const CollectionCardWidget({
     super.key,
-    required this.collectionCardData,
-    required this.index,
     required this.buildInfoColumn,
     this.isMilkCollection = false,
+    this.id,
+    this.name,
+    required this.dateTime,
+    this.milkType,
+    this.cattleFeedName,
   });
 
-  final List<CollectionCardData> collectionCardData;
-  final int index;
   final List<Widget> buildInfoColumn;
   final bool isMilkCollection;
+  final String? id;
+  final String? name;
+  final String? milkType;
+  final String dateTime;
+  final String? cattleFeedName;
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +46,13 @@ class CollectionCardWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    isMilkCollection
-                        ? 'Buyer'
-                        : '${collectionCardData[index].id}',
+                    isMilkCollection ? 'Buyer' : '$id',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    collectionCardData[index].name,
+                    name ?? '',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500),
                   ),
@@ -58,11 +60,11 @@ class CollectionCardWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (collectionCardData[index].cattleFeedName != null)
+          if (cattleFeedName != null)
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Text(
-                collectionCardData[index].cattleFeedName ?? '',
+                cattleFeedName ?? '',
                 style: const TextStyle(
                   color: Color.fromRGBO(127, 127, 127, 1),
                   fontSize: 14,
@@ -87,12 +89,12 @@ class CollectionCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  collectionCardData[index].dateTime ?? '',
+                  dateTime,
                   style: const TextStyle(color: Color.fromRGBO(92, 92, 92, 1)),
                 ),
-                if (collectionCardData[index].milkType != null)
+                if (milkType != null)
                   Text(
-                    collectionCardData[index].milkType ?? '',
+                    milkType ?? '',
                     style: const TextStyle(
                       color: Color.fromRGBO(92, 92, 92, 1),
                       fontSize: 14,

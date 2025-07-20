@@ -1,3 +1,5 @@
+import 'package:dairy_app/features/milk_collection/api/milk_collection_api.dart';
+import 'package:dairy_app/features/milk_collection/store/milk_collection_store.dart';
 import 'package:flutter/material.dart';
 
 import '../advance_amount/advance_amount_screen.dart';
@@ -10,8 +12,23 @@ import '../deduction_amount/deduction_amount_screen.dart';
 import '../milk_collection/milk_collection_screen.dart';
 import '../milk_sales_record/milk_record_screen.dart';
 
-class DairyAppLandingPage extends StatelessWidget {
-  DairyAppLandingPage({super.key});
+class DairyAppLandingPage extends StatefulWidget {
+  const DairyAppLandingPage({super.key});
+
+  @override
+  State<DairyAppLandingPage> createState() => _DairyAppLandingPageState();
+}
+
+class _DairyAppLandingPageState extends State<DairyAppLandingPage> {
+  late MilkCollectionStore _milkCollectionStore;
+  late MilkCollectionApi milkCollectionApi;
+
+  @override
+  void didChangeDependencies() {
+    _milkCollectionStore = MilkCollectionStore();
+    milkCollectionApi = MilkCollectionApi();
+    super.didChangeDependencies();
+  }
 
   final List<CatlogCardModel> catlogCardList = [
     CatlogCardModel(title: 'Milk Collection', imagePath: 'milk_collection.png'),
@@ -27,11 +44,14 @@ class DairyAppLandingPage extends StatelessWidget {
     CatlogCardModel(title: 'Settings', imagePath: 'settings.png'),
   ];
 
+  
+
   void getNavigation({
     required final BuildContext context,
     required final String categoryName,
   }) {
     if (categoryName == 'Milk Collection') {
+      // getMilkCollection();
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -142,6 +162,7 @@ class DairyAppLandingPage extends StatelessWidget {
                     title: catlogCardList[index].title,
                     imagePath: catlogCardList[index].imagePath,
                     onTap: () {
+                      print('djfjfjdj');
                       getNavigation(
                         context: context,
                         categoryName: catlogCardList[index].title,

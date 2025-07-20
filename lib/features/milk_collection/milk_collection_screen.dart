@@ -1,11 +1,13 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../common/Widgets/button_widget.dart';
 import '../common/Widgets/collection_card_widget.dart';
 import '../common/Widgets/default_appbar.dart';
 import '../common/model/dairy_app_model.dart';
+import '../utils/utils_file.dart';
 import 'add_new_collection.dart';
+import 'api/milk_collection_api.dart';
+import 'store/milk_collection_store.dart';
 
 class MilkCollectionScreen extends StatefulWidget {
   const MilkCollectionScreen({super.key});
@@ -15,6 +17,34 @@ class MilkCollectionScreen extends StatefulWidget {
 }
 
 class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
+  late MilkCollectionStore _milkCollectionStore;
+  late MilkCollectionApi milkCollectionApi;
+  @override
+  void didChangeDependencies() {
+    _milkCollectionStore = MilkCollectionStore();
+    milkCollectionApi = MilkCollectionApi();
+    WidgetsBinding.instance.addPostFrameCallback((_) => getMilkCollection());
+
+    super.didChangeDependencies();
+  }
+
+  getMilkCollection() {
+    UtilsFile.showLoadingDialog(context);
+    _milkCollectionStore
+        .getMilkCollectionData(api: milkCollectionApi)
+        .then((value) {
+      Navigator.of(context).pop();
+      _milkCollectionStore.getMilkCollection = value;
+      print(value);
+    }).onError((error, stacktrace) {
+      print(stacktrace);
+      Navigator.of(context).pop();
+      UtilsFile.showErrorDialog(context, 'Ooops', error.toString(), 'Okay', () {
+        Navigator.of(context).pop();
+      });
+    });
+  }
+
   List<MilkData> milkData = [
     MilkData(
       type: 'cow',
@@ -27,140 +57,6 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
       liter: 0,
     ),
   ];
-  Map<String, List<Map>> groupedData = {};
-  List<String> dateList = [];
-
-  List<CollectionCardData> collectionCardList = [
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Suraj Chavan',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '14/04/2025',
-    //   milkType: 'Cow',
-    // ),
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Pramod Chavan',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '14/04/2025',
-    //   milkType: 'Cow',
-    // ),
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Rohan Kale',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '13/04/2025',
-    //   milkType: 'Cow',
-    // ),
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Akshay Chavan',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '13/04/2025',
-    //   milkType: 'Cow',
-    // ),
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Kapil Chavan',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '12/04/2025',
-    //   milkType: 'Cow',
-    // ),
-    // CollectionCardData(
-    //   id: 125,
-    //   name: 'Kapil Chavan',
-    //   fat: 3.5,
-    //   snf: 8.5,
-    //   rate: 34.50,
-    //   liter: 5.5,
-    //   amount: 250,
-    //   dateTime: '11/04/2025',
-    //   milkType: 'Cow',
-    // ),
-  ];
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((final _) {
-      DatabaseReference ref =
-          FirebaseDatabase.instance.ref("users/7058426247/milkSales");
-
-      ref.once().then((event) {
-        final data = event.snapshot.value;
-
-        if (data == null) {
-          print("No sales found for this user");
-          return;
-        }
-
-        if (data is Map) {
-          data.forEach((saleId, saleData) {
-            if (saleData is Map && saleData.containsKey("date")) {
-              String date = saleData["date"];
-              groupedData.putIfAbsent(date, () => []);
-              groupedData[date]!.add(Map<String, dynamic>.from(saleData));
-            }
-          });
-
-          // Example print
-          groupedData.forEach((date, records) {
-            print("Date: $date");
-            for (var record in records) {
-              print('REC $record');
-              print(" -> ${record['name']} - ${record['liter']} liters");
-              try {
-                collectionCardList.add(
-                  CollectionCardData(
-                    id: int.parse('${record['code']}'),
-                    name: record['name'],
-                    fat: double.tryParse('${record['fat']}'),
-                    snf: double.tryParse('${record['snf']}'),
-                    rate: double.tryParse('${record['rate']}'),
-                    liter: double.tryParse('${record['liter']}'),
-                    amount: double.tryParse('${record['amount']}'),
-                    dateTime: '${record['date']}'.replaceAll('-', '/'),
-                    milkType: record['animalType'],
-                  ),
-                );
-              } catch (e, st) {
-                print('EX :$e :: $st');
-              }
-            }
-          });
-          dateList = groupedData.keys.toList();
-          print(':::::::::::####### ${dateList}');
-          print(':::::::::::####### ${groupedData}');
-          dateList.sort();
-          setState(() {});
-        } else {
-          print("Unexpected format");
-        }
-      }).catchError((error) {
-        print("Fetch error: $error");
-      });
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -233,48 +129,45 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: dateList.length,
+                itemCount: _milkCollectionStore.getMilkCollection?.body?.length,
                 itemBuilder: (context, index) {
-                 
+                  // final rate = collectionCardList[index].rate;
+                  // final liter = collectionCardList[index].liter;
 
-                  final rate = collectionCardList[index].rate;
-                  final liter = collectionCardList[index].liter;
+                  // final double amount = rate! * liter!;
 
-                  final double amount = rate! * liter!;
+                  // final currentIndexDateStr =
+                  //     collectionCardList.elementAt(index).dateTime ?? '';
 
-                  
-                  final currentIndexDateStr =
-                      collectionCardList.elementAt(index).dateTime ?? '';
-
-                  final previousIndexDateStr = collectionCardList
-                          .elementAt(index == 0 ? index : index - 1)
-                          .dateTime ??
-                      '';
+                  // final previousIndexDateStr = collectionCardList
+                  //         .elementAt(index == 0 ? index : index - 1)
+                  //         .dateTime ??
+                  //     '';
 
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (index == 0 ||
-                          currentIndexDateStr != previousIndexDateStr)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 10),
-                          child: Container(
-                            padding: const EdgeInsetsDirectional.symmetric(
-                              vertical: 12,
-                              horizontal: 16,
-                            ),
-                            color: const Color.fromRGBO(239, 249, 252, 1),
-                            child: Text(
-                              showDateLabel(currentIndexDateStr),
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 10),
+                        child: Container(
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
+                          color: const Color.fromRGBO(239, 249, 252, 1),
+                          child: Text(
+                            _milkCollectionStore.getMilkCollection?.body?[index]
+                                    .labelName ??
+                                '',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -293,30 +186,46 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
                             horizontal: 16,
                           ),
                           child: CollectionCardWidget(
-                            collectionCardData: collectionCardList,
-                            index: index,
+                            dateTime: '10 July 2025',
+                            id: _milkCollectionStore.getMilkCollection
+                                ?.body?[index].collections?[index].customerCode,
+                            name: _milkCollectionStore.getMilkCollection
+                                ?.body?[index].collections?[index].customerName,
+                            milkType: _milkCollectionStore.getMilkCollection
+                                ?.body?[index].collections?[index].milkType,
                             buildInfoColumn: [
-                             
                               BuildInfoColumn(
                                   label: 'Fat',
-                                  value:
-                                      collectionCardList[index].snf.toString()),
+                                  value: _milkCollectionStore
+                                          .getMilkCollection
+                                          ?.body?[index]
+                                          .collections?[index]
+                                          .collectionFat ??
+                                      ''),
                               BuildInfoColumn(
                                   label: 'SNF',
-                                  value:
-                                      collectionCardList[index].snf.toString()),
+                                  value: _milkCollectionStore
+                                          .getMilkCollection
+                                          ?.body?[index]
+                                          .collections?[index]
+                                          .collectionSnf ??
+                                      ''),
                               BuildInfoColumn(
                                   label: 'Rate',
-                                  value: '₹ ${collectionCardList[index].rate}'),
+                                  value:
+                                      '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[index].collectionRate ?? ''}'),
                               BuildInfoColumn(
                                   label: 'Liter',
-                                  value: collectionCardList[index]
-                                      .liter
-                                      .toString()),
+                                  value: _milkCollectionStore
+                                          .getMilkCollection
+                                          ?.body?[index]
+                                          .collections?[index]
+                                          .collectionLtr ??
+                                      ''),
                               BuildInfoColumn(
                                   label: 'Amount',
                                   value:
-                                      '₹ $amount'),
+                                      '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[index].collectionAmt ?? ''}'),
                             ],
                           ),
                         ),

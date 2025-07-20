@@ -158,7 +158,7 @@ class _MilkRecordScreenState extends State<MilkRecordScreen> {
                 ),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: collectionCardList.length,
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -175,8 +175,7 @@ class _MilkRecordScreenState extends State<MilkRecordScreen> {
                       },
                       child: CollectionCardWidget(
                         isMilkCollection: true,
-                        collectionCardData: collectionCardList,
-                        index: index,
+                        dateTime: '10 July 2025',
                         buildInfoColumn: [
                           BuildInfoColumn(
                               label: 'Fat',

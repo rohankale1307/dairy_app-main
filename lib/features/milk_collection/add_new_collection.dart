@@ -6,6 +6,9 @@ import '../common/Widgets/chip_widget.dart';
 import '../common/Widgets/edit_collection_button.dart';
 import '../common/Widgets/new_collection_button.dart';
 import '../common/Widgets/textfield.dart';
+import '../utils/utils_file.dart';
+import 'api/add_new_collection_api.dart';
+import 'store/milk_collection_store.dart';
 
 class AddNewCollectionScreen extends StatefulWidget {
   const AddNewCollectionScreen({super.key, required this.isEdit});
@@ -29,6 +32,16 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
   TextEditingController rateController = TextEditingController();
   TextEditingController dayTimeController = TextEditingController();
   TextEditingController animalTypeController = TextEditingController();
+
+  late MilkCollectionStore _milkCollectionStore;
+  late AddNewCollectionApi addNewCollectionApi;
+  @override
+  void didChangeDependencies() {
+    _milkCollectionStore = MilkCollectionStore();
+    addNewCollectionApi = AddNewCollectionApi();
+
+    super.didChangeDependencies();
+  }
 
   List<String> lables = [
     'Morning',
@@ -232,12 +245,33 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                 : NewCollectionButton(
                     title: 'Save',
                     onPressed: () {
-                      addMilkSales('7058426247');
+                      // addMilkSales('7058426247');
+                      addNewMilkCollection();
                     },
                   ),
           ),
         ),
       ),
     );
+  }
+
+  addNewMilkCollection() {
+    UtilsFile.showLoadingDialog(context);
+    _milkCollectionStore
+        .getNewCollectionData(api: addNewCollectionApi)
+        .then((value) {
+      Navigator.of(context).pop();
+      UtilsFile.showErrorDialog(
+          context, 'Success', 'User Added Succesfully', 'Okay', () {
+        Navigator.of(context).pop();
+      });
+      print(value);
+    }).onError((error, stacktrace) {
+      print(stacktrace);
+      Navigator.of(context).pop();
+      UtilsFile.showErrorDialog(context, 'Ooops', error.toString(), 'Okay', () {
+        Navigator.of(context).pop();
+      });
+    });
   }
 }

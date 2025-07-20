@@ -129,8 +129,7 @@ class CattleFeedSales extends StatelessWidget {
                           horizontal: 16,
                         ),
                         child: CollectionCardWidget(
-                          collectionCardData: cattleFeedSalesList,
-                          index: index,
+                          dateTime: '10 July 2025',
                           buildInfoColumn: [
                             BuildInfoColumn(
                                 label: 'Qty',

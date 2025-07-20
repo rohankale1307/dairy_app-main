@@ -1,4 +1,5 @@
 import 'package:dairy_app/features/login_user/register_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dairy_app_landing_page.dart';
@@ -14,10 +15,12 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController mobNoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late final DatabaseReference dbRef;
+  Dio dio = Dio();
 
   @override
   void initState() {
     dbRef = FirebaseDatabase.instance.ref().child("users");
+    // fetchData();
     super.initState();
   }
 
@@ -27,13 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }) async {
     late DataSnapshot snapshot;
     Query query = dbRef.orderByChild('mobileNo').equalTo(mobNo);
-     
-      snapshot = await query.get().onError((e,st){
 
-        print('E $e');
-        return snapshot;
-      });
-     
+    snapshot = await query.get().onError((e, st) {
+      print('E $e');
+      return snapshot;
+    });
 
     if (snapshot.exists) {
       bool found = false;
@@ -161,10 +162,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    loginUser(
-                      mobNo: mobNoController.text,
-                      password: passwordController.text,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DairyAppLandingPage(),
+                      ),
                     );
+                    // loginUser(
+                    //   mobNo: mobNoController.text,
+                    //   password: passwordController.text,
+                    // );
                   },
                   style: ButtonStyle(
                     backgroundColor: const WidgetStatePropertyAll(Colors.black),
