@@ -70,6 +70,7 @@ class _NewDairyExpenseScreenState extends State<NewDairyExpenseScreen> {
                   onSavePressed: () {},
                 )
               : NewCollectionButton(
+                 color: Colors.black,
                   title: 'Save',
                   onPressed: () {},
                 ),

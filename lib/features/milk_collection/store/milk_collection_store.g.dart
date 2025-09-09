@@ -25,6 +25,57 @@ mixin _$MilkCollectionStore on MilkCollectionStoreBase, Store {
     });
   }
 
+  late final _$newCollectionResponseBodyAtom = Atom(
+      name: 'MilkCollectionStoreBase.newCollectionResponseBody',
+      context: context);
+
+  @override
+  NewCollectionResponseBody? get newCollectionResponseBody {
+    _$newCollectionResponseBodyAtom.reportRead();
+    return super.newCollectionResponseBody;
+  }
+
+  @override
+  set newCollectionResponseBody(NewCollectionResponseBody? value) {
+    _$newCollectionResponseBodyAtom
+        .reportWrite(value, super.newCollectionResponseBody, () {
+      super.newCollectionResponseBody = value;
+    });
+  }
+
+  late final _$getCustDetailsResponseAtom = Atom(
+      name: 'MilkCollectionStoreBase.getCustDetailsResponse', context: context);
+
+  @override
+  GetCustDetailsResponse? get getCustDetailsResponse {
+    _$getCustDetailsResponseAtom.reportRead();
+    return super.getCustDetailsResponse;
+  }
+
+  @override
+  set getCustDetailsResponse(GetCustDetailsResponse? value) {
+    _$getCustDetailsResponseAtom
+        .reportWrite(value, super.getCustDetailsResponse, () {
+      super.getCustDetailsResponse = value;
+    });
+  }
+
+  late final _$customerNameAtom =
+      Atom(name: 'MilkCollectionStoreBase.customerName', context: context);
+
+  @override
+  String get customerName {
+    _$customerNameAtom.reportRead();
+    return super.customerName;
+  }
+
+  @override
+  set customerName(String value) {
+    _$customerNameAtom.reportWrite(value, super.customerName, () {
+      super.customerName = value;
+    });
+  }
+
   late final _$getMilkCollectionDataAsyncAction = AsyncAction(
       'MilkCollectionStoreBase.getMilkCollectionData',
       context: context);
@@ -35,10 +86,33 @@ mixin _$MilkCollectionStore on MilkCollectionStoreBase, Store {
         .run(() => super.getMilkCollectionData(api: api));
   }
 
+  late final _$getNewCollectionDataAsyncAction = AsyncAction(
+      'MilkCollectionStoreBase.getNewCollectionData',
+      context: context);
+
+  @override
+  Future<dynamic> getNewCollectionData({required AddNewCollectionApi api}) {
+    return _$getNewCollectionDataAsyncAction
+        .run(() => super.getNewCollectionData(api: api));
+  }
+
+  late final _$getCustDetailsAsyncAction =
+      AsyncAction('MilkCollectionStoreBase.getCustDetails', context: context);
+
+  @override
+  Future<dynamic> getCustDetails(
+      {required GetCustDtlsApi api, required String code}) {
+    return _$getCustDetailsAsyncAction
+        .run(() => super.getCustDetails(api: api, code: code));
+  }
+
   @override
   String toString() {
     return '''
-getMilkCollection: ${getMilkCollection}
+getMilkCollection: ${getMilkCollection},
+newCollectionResponseBody: ${newCollectionResponseBody},
+getCustDetailsResponse: ${getCustDetailsResponse},
+customerName: ${customerName}
     ''';
   }
 }

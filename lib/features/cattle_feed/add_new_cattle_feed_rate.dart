@@ -63,6 +63,7 @@ class _AddNewCattleFeedRateState extends State<AddNewCattleFeedRate> {
                   onSavePressed: () {},
                 )
               : NewCollectionButton(
+                 color: Colors.black,
                   title: 'Save',
                   onPressed: () {},
                 ),

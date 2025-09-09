@@ -2,6 +2,9 @@ import 'package:dairy_app/features/login_user/register_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../common/Widgets/default_appbar.dart';
+import '../common/Widgets/text_form_field.dart';
 import 'dairy_app_landing_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   late final DatabaseReference dbRef;
   Dio dio = Dio();
+  bool isShowPassword = false;
+  final mobileNumberRegex = RegExp(r'^\d{0,10}$');
 
   @override
   void initState() {
@@ -69,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DairyAppLandingPage(),
+              builder: (context) => const DairyAppLandingPage(),
             ),
           );
         });
@@ -123,6 +128,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: DefaultAppbar.defaultAppbar(
+          title: 'Back',
+          context: context,
+          backgroundColor: Colors.white,
+          space: 1,
+        ),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -133,12 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Padding(
                   padding: EdgeInsets.only(
                     top: 90,
-                    bottom: 40,
+                    bottom: 50,
                     left: 8,
                     right: 8,
                   ),
                   child: Text(
-                    'Open your account',
+                    'Login',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
@@ -146,18 +157,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                textFieldWidget(
+                CustomTextFormField(
                   controller: mobNoController,
                   lable: 'Phone Number',
                   prefixText: '+91 ',
                   keyboardType: TextInputType.phone,
-                  maxLength: 10,
+                  onChanged: (final String value) {},
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: textFieldWidget(
+                  child: CustomTextFormField(
                     controller: passwordController,
                     lable: 'Password',
+                    onChanged: (final String value) {},
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isShowPassword = !isShowPassword;
+                        });
+                      },
+                      child: Icon(
+                        isShowPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                    obscureText: isShowPassword,
                   ),
                 ),
                 TextButton(
@@ -165,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DairyAppLandingPage(),
+                        builder: (context) => const DairyAppLandingPage(),
                       ),
                     );
                     // loginUser(
@@ -174,7 +202,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     // );
                   },
                   style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(Colors.black),
+                    backgroundColor: const WidgetStatePropertyAll(
+                        Color.fromRGBO(0, 118, 255, 1)),
                     shape: WidgetStateProperty.all(
                       const BeveledRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -184,66 +213,50 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      'LogIn',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'LogIn',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                FittedBox(
-                  child: Row(
-                    children: [
-                      const Text(
-                        'By continuing, you agree to the',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: TextButton(
+                    style: const ButtonStyle(
+                        overlayColor:
+                            WidgetStatePropertyAll(Colors.transparent)),
+                    onPressed: () {},
+                    child: const Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Terms and Conditions',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(0, 144, 255, 1),
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget textFieldWidget({
-    final TextInputType? keyboardType,
-    required final String lable,
-    final String? prefixText,
-    final int? maxLength,
-    required final TextEditingController controller,
-  }) {
-    return TextField(
-      controller: controller,
-      keyboardType: keyboardType ?? TextInputType.text,
-      maxLength: maxLength,
-      decoration: InputDecoration(
-        labelText: lable,
-        prefixText: prefixText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

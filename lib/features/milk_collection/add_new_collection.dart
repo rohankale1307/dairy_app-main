@@ -1,6 +1,7 @@
 import 'package:dairy_app/features/common/Widgets/default_appbar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../common/Widgets/chip_widget.dart';
 import '../common/Widgets/edit_collection_button.dart';
@@ -8,6 +9,8 @@ import '../common/Widgets/new_collection_button.dart';
 import '../common/Widgets/textfield.dart';
 import '../utils/utils_file.dart';
 import 'api/add_new_collection_api.dart';
+import 'api/get_cust_dtls_api.dart';
+import 'milk_collection_screen.dart';
 import 'store/milk_collection_store.dart';
 
 class AddNewCollectionScreen extends StatefulWidget {
@@ -35,12 +38,16 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
 
   late MilkCollectionStore _milkCollectionStore;
   late AddNewCollectionApi addNewCollectionApi;
+  late GetCustDtlsApi getCustDtlsApi;
+  DateTime? _selectedDate;
+
   @override
-  void didChangeDependencies() {
+  void initState() {
     _milkCollectionStore = MilkCollectionStore();
     addNewCollectionApi = AddNewCollectionApi();
-
-    super.didChangeDependencies();
+    getCustDtlsApi = GetCustDtlsApi();
+    // TODO: implement initState
+    super.initState();
   }
 
   List<String> lables = [
@@ -63,65 +70,6 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
         animalTypeController.text = index == 2 ? 'Cow' : 'Buffalo';
       }
     });
-  }
-
-  void addMilkSales(String mobNo) async {
-    final date = dateTimeController.text.trim();
-    final code = codeController.text;
-    final name = customerNameController.text;
-    final liter = literController.text;
-    final fat = fatController.text;
-    final snf = snfController.text;
-    final rate = rateController.text;
-    final dayTime = dayTimeController.text;
-    final animalType = animalTypeController.text;
-
-    if (date.isEmpty ||
-        code.isEmpty ||
-        name.isEmpty ||
-        liter.isEmpty ||
-        fat.isEmpty ||
-        snf.isEmpty ||
-        rate.isEmpty ||
-        dayTime.isEmpty ||
-        animalType.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.purple,
-          duration: Duration(seconds: 1),
-          content: Center(
-            child: Text(
-              "Please fill all the required details",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.amber,
-              ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      final dbRef = FirebaseDatabase.instance
-          .ref()
-          .child('users')
-          .child(mobNo)
-          .child('milkSales');
-
-      await dbRef.child(code).set({
-        'date': date,
-        'name': name,
-        'code': code,
-        'liter': liter,
-        'fat': fat,
-        'snf': snf,
-        'rate': rate,
-        'dayTime': dayTime,
-        'animalType': animalType,
-      });
-
-      print('Milk Sale Data Added Successfully !');
-    }
   }
 
   @override
@@ -188,17 +136,33 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
+                    canRequestFocus: false,
+                    readOnly: true,
                     controller: dateTimeController,
                     lableText: 'Date',
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: const Icon(
+                        Icons.calendar_month_outlined,
+                      ),
+                    ),
                   ),
                 ),
                 TextFieldWidget(
                   controller: codeController,
                   lableText: 'Code',
+                  onSubmitted: (final String code) {
+                    print('hdgsds');
+                    getCustDetails(code: code);
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextFieldWidget(
+                    canRequestFocus: false,
+                    readOnly: true,
                     controller: customerNameController,
                     lableText: 'Customer Name',
                     textInputType: TextInputType.name,
@@ -248,11 +212,62 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
                       // addMilkSales('7058426247');
                       addNewMilkCollection();
                     },
+                    color: Colors.black,
                   ),
           ),
         ),
       ),
     );
+  }
+
+  _selectDate(BuildContext context) async {
+    DateTime? newSelectedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2040),
+    );
+
+    if (newSelectedDate != null) {
+      _selectedDate = newSelectedDate;
+      dateTimeController
+        ..text =
+            DateFormat('dd MMM yyyy').format(_selectedDate ?? DateTime(2000))
+        ..selection = TextSelection.fromPosition(TextPosition(
+            offset: dateTimeController.text.length,
+            affinity: TextAffinity.upstream));
+    }
+  }
+
+  getCustDetails({required final String code}) {
+    UtilsFile.showLoadingDialog(context);
+    _milkCollectionStore
+        .getCustDetails(
+      api: getCustDtlsApi,
+      code: code,
+    )
+        .then((value) {
+      Navigator.of(context).pop();
+      _milkCollectionStore.getCustDetailsResponse = value;
+
+      setState(() {
+        customerNameController.text = _milkCollectionStore.customerName;
+      });
+      UtilsFile.showErrorDialog(
+          context,
+          'Ooops',
+          _milkCollectionStore.getCustDetailsResponse?.header?.message ?? '',
+          'Okay', () {
+        Navigator.of(context).pop();
+      });
+      print(value);
+    }).onError((error, stacktrace) {
+      print(stacktrace);
+      Navigator.of(context).pop();
+      UtilsFile.showErrorDialog(context, 'Ooops', error.toString(), 'Okay', () {
+        Navigator.of(context).pop();
+      });
+    });
   }
 
   addNewMilkCollection() {
@@ -262,8 +277,17 @@ class _AddNewCollectionScreenState extends State<AddNewCollectionScreen> {
         .then((value) {
       Navigator.of(context).pop();
       UtilsFile.showErrorDialog(
-          context, 'Success', 'User Added Succesfully', 'Okay', () {
+          context,
+          'Oops',
+          '${_milkCollectionStore.newCollectionResponseBody?.header?.message}',
+          'Okay', () {
         Navigator.of(context).pop();
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => MilkCollectionScreen(),
+          ),
+        );
       });
       print(value);
     }).onError((error, stacktrace) {

@@ -5,17 +5,19 @@ class NewCollectionButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
+    required this.color,
   });
 
   final String title;
   final void Function() onPressed;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: const WidgetStatePropertyAll(Colors.black),
+        backgroundColor:  WidgetStatePropertyAll(color),
         shape: WidgetStateProperty.all(
           const BeveledRectangleBorder(
             borderRadius: BorderRadius.all(

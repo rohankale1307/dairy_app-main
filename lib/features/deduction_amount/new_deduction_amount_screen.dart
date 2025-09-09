@@ -41,6 +41,10 @@ class _NewDeductionScreenState extends State<NewDeductionScreen> {
                 TextFieldWidget(
                   controller: dateTimeController,
                   lableText: 'Date',
+                  suffixIcon: DatePickerDialog(
+                    firstDate: DateTime(1999),
+                    lastDate: DateTime.now(),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
@@ -83,6 +87,7 @@ class _NewDeductionScreenState extends State<NewDeductionScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
+                    color: Colors.black,
                     title: 'Save',
                     onPressed: () {},
                   ),

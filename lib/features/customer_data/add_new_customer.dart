@@ -84,6 +84,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                   onSavePressed: () {},
                 )
               : NewCollectionButton(
+                 color: Colors.black,
                   title: 'Save',
                   onPressed: () {},
                 ),

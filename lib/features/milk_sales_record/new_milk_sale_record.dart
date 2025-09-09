@@ -147,6 +147,7 @@ class _NewMilkSaleRecordScreenState extends State<NewMilkSaleRecordScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
+                  color: Colors.black,
                     title: 'Save',
                     onPressed: () {},
                   ),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class DefaultAppbar {
   static PreferredSizeWidget? defaultAppbar({
     required final String title,
+    final Color? backgroundColor,
+    final double? space,
     required final BuildContext context,
     final PreferredSizeWidget? bottomWidget,
     final isShowDatePicker = false,
@@ -11,8 +13,10 @@ class DefaultAppbar {
   }) {
     return AppBar(
       scrolledUnderElevation: 0,
-      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+      backgroundColor:
+          backgroundColor ?? const Color.fromRGBO(245, 245, 245, 1),
       bottom: bottomWidget,
+      titleSpacing: space,
       actions: [
         if (isShowSearchIcon)
           IconButton(

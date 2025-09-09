@@ -1,6 +1,11 @@
 import 'package:dairy_app/features/login_user/login_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../common/Widgets/default_appbar.dart';
+import '../common/Widgets/text_form_field.dart';
+import 'view/dairy_settings.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,6 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController cnfPasswordController = TextEditingController();
   late final DatabaseReference dbRef;
+  bool isShowPass = false;
+  bool isShowCnfPass = false;
 
   @override
   void initState() {
@@ -112,6 +119,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: DefaultAppbar.defaultAppbar(
+          title: 'Back',
+          context: context,
+          backgroundColor: Colors.white,
+          space: 1,
+        ),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -121,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 const Padding(
                   padding: EdgeInsets.only(
-                    top: 90,
+                    top: 30,
                     bottom: 40,
                     left: 8,
                     right: 8,
@@ -135,42 +148,87 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                textFieldWidget(
+                CustomTextFormField(
                   controller: mobNoController,
-                  lable: 'Phone Number',
+                  lable: 'Phone number',
                   prefixText: '+91 ',
-                  keyboardType: TextInputType.number,
-                  maxLength: 10,
+                  keyboardType: TextInputType.phone,
+                  onChanged: (final String value) {},
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: textFieldWidget(
+                  child: CustomTextFormField(
                     controller: dairyNameController,
-                    lable: 'Dairy Name',
+                    lable: 'Dairy name',
                   ),
                 ),
-                textFieldWidget(
+                CustomTextFormField(
                   controller: passwordController,
-                  lable: 'Password',
+                  lable: 'Your full name',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: textFieldWidget(
-                    controller: cnfPasswordController,
-                    lable: 'Confirm Password',
+                  child: CustomTextFormField(
+                    controller: dairyNameController,
+                    lable: 'City / Villeage',
+                  ),
+                ),
+                CustomTextFormField(
+                  controller: passwordController,
+                  lable: 'Password',
+                  onChanged: (final String value) {},
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isShowPass = !isShowPass;
+                      });
+                    },
+                    child: Icon(
+                      isShowPass ? Icons.visibility : Icons.visibility_off,
+                    ),
+                  ),
+                  obscureText: isShowPass,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: CustomTextFormField(
+                    controller: passwordController,
+                    lable: 'Re-enter password',
+                    onChanged: (final String value) {},
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isShowCnfPass = !isShowCnfPass;
+                        });
+                      },
+                      child: Icon(
+                        isShowCnfPass ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
+                    obscureText: isShowCnfPass,
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    registerUser(
-                      mobNo: mobNoController.text,
-                      dairyName: dairyNameController.text,
-                      password: passwordController.text,
-                      cnfPassword: cnfPasswordController.text,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DairySettings(),
+                      ),
                     );
+                    // registerUser(
+                    //   mobNo: mobNoController.text,
+                    //   dairyName: dairyNameController.text,
+                    //   password: passwordController.text,
+                    //   cnfPassword: cnfPasswordController.text,
+                    // );
                   },
                   style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(Colors.black),
+                    backgroundColor: const WidgetStatePropertyAll(
+                        Color.fromRGBO(0, 118, 255, 1)),
                     shape: WidgetStateProperty.all(
                       const BeveledRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -180,14 +238,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Continue',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -199,7 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                          color: Color.fromRGBO(102, 102, 102, 1),
                         ),
                       ),
                       TextButton(
@@ -219,27 +290,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget textFieldWidget({
-    final TextInputType? keyboardType,
-    required final String lable,
-    final String? prefixText,
-    final int? maxLength,
-    required final TextEditingController controller,
-  }) {
-    return TextField(
-      controller: controller,
-      keyboardType: keyboardType ?? TextInputType.text,
-      maxLength: maxLength,
-      decoration: InputDecoration(
-        labelText: lable,
-        prefixText: prefixText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../common/Widgets/button_widget.dart';
 import '../common/Widgets/collection_card_widget.dart';
@@ -19,13 +20,14 @@ class MilkCollectionScreen extends StatefulWidget {
 class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
   late MilkCollectionStore _milkCollectionStore;
   late MilkCollectionApi milkCollectionApi;
+
   @override
-  void didChangeDependencies() {
+  void initState() {
     _milkCollectionStore = MilkCollectionStore();
     milkCollectionApi = MilkCollectionApi();
     WidgetsBinding.instance.addPostFrameCallback((_) => getMilkCollection());
-
-    super.didChangeDependencies();
+    // TODO: implement initState
+    super.initState();
   }
 
   getMilkCollection() {
@@ -72,8 +74,8 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
           isShowDatePicker: true,
           isShowSearchIcon: true,
         ),
-        body: SingleChildScrollView(
-          child: Column(
+        body: Observer(builder: (context) {
+          return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
@@ -126,117 +128,135 @@ class _MilkCollectionScreenState extends State<MilkCollectionScreen> {
                   ],
                 ),
               ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _milkCollectionStore.getMilkCollection?.body?.length,
-                itemBuilder: (context, index) {
-                  // final rate = collectionCardList[index].rate;
-                  // final liter = collectionCardList[index].liter;
+              Expanded(
+                child: ListView.builder(
+                  itemCount:
+                      _milkCollectionStore.getMilkCollection?.body?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    // final rate = collectionCardList[index].rate;
+                    // final liter = collectionCardList[index].liter;
 
-                  // final double amount = rate! * liter!;
+                    // final double amount = rate! * liter!;
 
-                  // final currentIndexDateStr =
-                  //     collectionCardList.elementAt(index).dateTime ?? '';
+                    // final currentIndexDateStr =
+                    //     collectionCardList.elementAt(index).dateTime ?? '';
 
-                  // final previousIndexDateStr = collectionCardList
-                  //         .elementAt(index == 0 ? index : index - 1)
-                  //         .dateTime ??
-                  //     '';
+                    // final previousIndexDateStr = collectionCardList
+                    //         .elementAt(index == 0 ? index : index - 1)
+                    //         .dateTime ??
+                    //     '';
 
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 10),
-                        child: Container(
-                          padding: const EdgeInsetsDirectional.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          color: const Color.fromRGBO(239, 249, 252, 1),
-                          child: Text(
-                            _milkCollectionStore.getMilkCollection?.body?[index]
-                                    .labelName ??
-                                '',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 10),
+                          child: Container(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              vertical: 12,
+                              horizontal: 16,
                             ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const AddNewCollectionScreen(
-                                isEdit: true,
+                            color: const Color.fromRGBO(239, 249, 252, 1),
+                            child: Text(
+                              _milkCollectionStore.getMilkCollection
+                                      ?.body?[index].labelName ??
+                                  '',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 16,
-                          ),
-                          child: CollectionCardWidget(
-                            dateTime: '10 July 2025',
-                            id: _milkCollectionStore.getMilkCollection
-                                ?.body?[index].collections?[index].customerCode,
-                            name: _milkCollectionStore.getMilkCollection
-                                ?.body?[index].collections?[index].customerName,
-                            milkType: _milkCollectionStore.getMilkCollection
-                                ?.body?[index].collections?[index].milkType,
-                            buildInfoColumn: [
-                              BuildInfoColumn(
-                                  label: 'Fat',
-                                  value: _milkCollectionStore
-                                          .getMilkCollection
-                                          ?.body?[index]
-                                          .collections?[index]
-                                          .collectionFat ??
-                                      ''),
-                              BuildInfoColumn(
-                                  label: 'SNF',
-                                  value: _milkCollectionStore
-                                          .getMilkCollection
-                                          ?.body?[index]
-                                          .collections?[index]
-                                          .collectionSnf ??
-                                      ''),
-                              BuildInfoColumn(
-                                  label: 'Rate',
-                                  value:
-                                      '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[index].collectionRate ?? ''}'),
-                              BuildInfoColumn(
-                                  label: 'Liter',
-                                  value: _milkCollectionStore
-                                          .getMilkCollection
-                                          ?.body?[index]
-                                          .collections?[index]
-                                          .collectionLtr ??
-                                      ''),
-                              BuildInfoColumn(
-                                  label: 'Amount',
-                                  value:
-                                      '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[index].collectionAmt ?? ''}'),
-                            ],
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                },
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const AddNewCollectionScreen(
+                                  isEdit: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: _milkCollectionStore.getMilkCollection
+                                      ?.body?[index].collections?.length ??
+                                  0,
+                              itemBuilder: (context, innerIndex) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 16,
+                                  ),
+                                  child: CollectionCardWidget(
+                                    dateTime: '10 July 2025',
+                                    id: _milkCollectionStore
+                                        .getMilkCollection
+                                        ?.body?[index]
+                                        .collections?[innerIndex]
+                                        .customerCode,
+                                    name: _milkCollectionStore
+                                        .getMilkCollection
+                                        ?.body?[index]
+                                        .collections?[innerIndex]
+                                        .customerName,
+                                    milkType: _milkCollectionStore
+                                        .getMilkCollection
+                                        ?.body?[index]
+                                        .collections?[innerIndex]
+                                        .milkType,
+                                    buildInfoColumn: [
+                                      BuildInfoColumn(
+                                          label: 'Fat',
+                                          value: _milkCollectionStore
+                                                  .getMilkCollection
+                                                  ?.body?[index]
+                                                  .collections?[innerIndex]
+                                                  .collectionFat ??
+                                              ''),
+                                      BuildInfoColumn(
+                                          label: 'SNF',
+                                          value: _milkCollectionStore
+                                                  .getMilkCollection
+                                                  ?.body?[index]
+                                                  .collections?[innerIndex]
+                                                  .collectionSnf ??
+                                              ''),
+                                      BuildInfoColumn(
+                                          label: 'Rate',
+                                          value:
+                                              '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[innerIndex].collectionRate ?? ''}'),
+                                      BuildInfoColumn(
+                                          label: 'Liter',
+                                          value: _milkCollectionStore
+                                                  .getMilkCollection
+                                                  ?.body?[index]
+                                                  .collections?[innerIndex]
+                                                  .collectionLtr ??
+                                              ''),
+                                      BuildInfoColumn(
+                                          label: 'Amount',
+                                          value:
+                                              '₹ ${_milkCollectionStore.getMilkCollection?.body?[index].collections?[innerIndex].collectionAmt ?? ''}'),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
-          ),
-        ),
+          );
+        }),
         floatingActionButton: Buttons.addCollectionButton(
           title: 'New Collections',
           onPressed: () {

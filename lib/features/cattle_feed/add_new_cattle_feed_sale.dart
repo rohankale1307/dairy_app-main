@@ -96,6 +96,7 @@ class _AddNewCattleFeedSaleState extends State<AddNewCattleFeedSale> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
+                   color: Colors.black,
                     title: 'Save',
                     onPressed: () {},
                   ),

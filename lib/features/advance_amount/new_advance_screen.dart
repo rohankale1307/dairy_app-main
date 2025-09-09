@@ -83,6 +83,7 @@ class _NewAdvanceScreenState extends State<NewAdvanceScreen> {
                     onSavePressed: () {},
                   )
                 : NewCollectionButton(
+                   color: Colors.black,
                     title: 'Save',
                     onPressed: () {},
                   ),
