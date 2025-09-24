@@ -56,7 +56,7 @@ class CustomDropdownField extends StatelessWidget {
         if (isOpen)
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(4),

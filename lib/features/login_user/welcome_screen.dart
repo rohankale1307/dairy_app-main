@@ -1,18 +1,16 @@
-import 'package:dairy_app/features/login_user/login_screen.dart';
-import 'package:dairy_app/features/login_user/register_screen.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/normal_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(0, 118, 255, 1),
+      body: SafeArea(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -23,107 +21,45 @@ class WelcomeScreen extends StatelessWidget {
                 child: Text(
                   'Welcome to',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'FigTree',
-                  ),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                          color: Color.fromRGBO(0, 0, 0, 0.15),
+                        ),
+                      ]),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  'My Dairy App',
+                  'DairyGo App',
                   style: TextStyle(
-                    color: Colors.black,
                     fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'FigTree',
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: dottedLineWidget(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 8,
-                ),
-                child: titleWithImage(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: NormalButton(
                   title: 'Open a new account',
-                  icon: Icons.person,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ),
-                    );
-                  },
+                  image: 'assets/images/user.svg',
+                  onPressed: () {},
                 ),
               ),
-              dottedLineWidget(),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 8,
-                ),
-                child: titleWithImage(
-                  title: 'Login to My Dairy',
-                  icon: Icons.login_rounded,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
-                  },
-                ),
+              NormalButton(
+                title: 'Open a new account',
+                image: 'assets/images/log_in.svg',
+                onPressed: () {},
               ),
-              dottedLineWidget(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget dottedLineWidget() {
-    return const DottedLine(
-      dashColor: Color.fromRGBO(191, 191, 191, 0.7),
-      dashLength: 10,
-      dashGapLength: 6,
-    );
-  }
-
-  Widget titleWithImage({
-    required final String title,
-    required final IconData icon,
-    required void Function()? onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Color.fromRGBO(25, 25, 25, 1),
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'FigTree',
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          FittedBox(child: Icon(icon))
-        ],
       ),
     );
   }

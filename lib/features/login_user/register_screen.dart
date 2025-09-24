@@ -1,4 +1,5 @@
 import 'package:dairy_app/features/login_user/login_screen.dart';
+import 'package:dairy_app/features/widgets/normal_button.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -140,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     right: 8,
                   ),
                   child: Text(
-                    'Open your account',
+                    'Craete your new \naccount',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
@@ -211,7 +212,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: isShowCnfPass,
                   ),
                 ),
-                TextButton(
+                NormalButton(
+                  title: 'Continue',
+                  titleColor: Colors.white,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -219,48 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         builder: (context) => const DairySettings(),
                       ),
                     );
-                    // registerUser(
-                    //   mobNo: mobNoController.text,
-                    //   dairyName: dairyNameController.text,
-                    //   password: passwordController.text,
-                    //   cnfPassword: cnfPasswordController.text,
-                    // );
                   },
-                  style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(
-                        Color.fromRGBO(0, 118, 255, 1)),
-                    shape: WidgetStateProperty.all(
-                      const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ),
                 FittedBox(
                   child: Row(

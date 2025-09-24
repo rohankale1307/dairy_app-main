@@ -1,3 +1,4 @@
+import 'package:dairy_app/features/widgets/normal_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/Widgets/custom_dropdown_field.dart';
@@ -75,9 +76,9 @@ class _DairySettingsState extends State<DairySettings> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 40),
+                padding: EdgeInsets.symmetric(vertical: 20),
                 child: Text(
-                  'Dairy Settings',
+                  'Settings',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
@@ -85,74 +86,37 @@ class _DairySettingsState extends State<DairySettings> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: CustomDropdownField(
-                  selectedValue: selectedtype,
-                  label: 'Collection type',
-                  options: collectionType,
-                  onChanged: (val) => _onOptionSelected('collectionType', val),
-                  onToggle: () => _toggleDropdown('collectionType'),
-                  isOpen: currentlyOpenDropdown == 'collectionType',
-                  trailingImage: Icon(Icons.check),
-                ),
-              ),
               CustomDropdownField(
-                selectedValue: selectedCycle,
-                label: 'Billing cycle',
-                options: billingCycle,
-                onChanged: (val) => _onOptionSelected('billingCycle', val),
-                onToggle: () => _toggleDropdown('billingCycle'),
-                isOpen: currentlyOpenDropdown == 'billingCycle',
+                selectedValue: selectedtype,
+                label: 'Quality measurements',
+                options: collectionType,
+                onChanged: (val) => _onOptionSelected('collectionType', val),
+                onToggle: () => _toggleDropdown('collectionType'),
+                isOpen: currentlyOpenDropdown == 'collectionType',
+                trailingImage: const Icon(Icons.check),
               ),
-             
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PlanPage(),
-                      ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(
-                        Color.fromRGBO(0, 118, 255, 1)),
-                    shape: WidgetStateProperty.all(
-                      const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: CustomDropdownField(
+                  selectedValue: selectedCycle,
+                  label: 'Billing cycle',
+                  options: billingCycle,
+                  onChanged: (val) => _onOptionSelected('billingCycle', val),
+                  onToggle: () => _toggleDropdown('billingCycle'),
+                  isOpen: currentlyOpenDropdown == 'billingCycle',
                 ),
+              ),
+              NormalButton(
+                title: 'Continue',
+                titleColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PlanPage(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -161,63 +125,3 @@ class _DairySettingsState extends State<DairySettings> {
     );
   }
 }
-
-// String? selectedFruit;
-// String? selectedCity;
-
-// final List<String> fruitOptions = ['Apple', 'Banana', 'Cherry'];
-// final List<String> cityOptions = ['New York', 'London', 'Tokyo'];
-
-// String? currentlyOpenDropdown; // can be 'fruit' or 'city' or null
-
-// void _toggleDropdown(String dropdownId) {
-//   setState(() {
-//     if (currentlyOpenDropdown == dropdownId) {
-//       currentlyOpenDropdown = null;
-//     } else {
-//       currentlyOpenDropdown = dropdownId;
-//     }
-//   });
-// }
-
-// void _onOptionSelected(String dropdownId, String value) {
-//   setState(() {
-//     if (dropdownId == 'fruit') {
-//       selectedFruit = value;
-//     } else if (dropdownId == 'city') {
-//       selectedCity = value;
-//     }
-//     currentlyOpenDropdown = null; // close dropdown after selection
-//   });
-// }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     appBar: AppBar(title: Text('Dropdown Controller')),
-//     body: Padding(
-//       padding: const EdgeInsets.all(20.0),
-//       child: Column(
-//         children: [
-//           CustomDropdownField(
-//             label: 'Collection type',
-//             options: coll,
-//             selectedValue: selectedFruit,
-//             isOpen: currentlyOpenDropdown == 'fruit',
-//             onToggle: () => _toggleDropdown('fruit'),
-//             onChanged: (val) => _onOptionSelected('fruit', val),
-//           ),
-//           SizedBox(height: 20),
-//           CustomDropdownField(
-//             label: 'Select City',
-//             options: cityOptions,
-//             selectedValue: selectedCity,
-//             isOpen: currentlyOpenDropdown == 'city',
-//             onToggle: () => _toggleDropdown('city'),
-//             onChanged: (val) => _onOptionSelected('city', val),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }

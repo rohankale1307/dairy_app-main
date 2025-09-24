@@ -39,12 +39,7 @@ class DefaultAppbar {
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: const Icon(Icons.arrow_back_rounded),
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(
-            const Color.fromRGBO(245, 245, 245, 1),
-          ),
-        ),
+        icon: const Icon(Icons.arrow_back),
       ),
       title: Text(
         title,

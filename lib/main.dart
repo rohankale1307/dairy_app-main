@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'features/login_user/app_description_screen.dart';
+import 'features/login_user/register_screen.dart';
 import 'features/login_user/welcome_screen.dart';
+import 'features/splash_screens/home_page.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const WelcomeScreen(),
+      home: const RegisterScreen(),
     );
   }
 }

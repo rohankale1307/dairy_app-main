@@ -239,3 +239,15 @@ class NetPaymentReportModel {
     required this.totalNetPayment,
   });
 }
+
+class AppDescModel {
+  String title;
+  String subTitle;
+  String image;
+
+  AppDescModel({
+    required this.title,
+    required this.subTitle,
+    required this.image,
+  });
+}

@@ -35,99 +35,21 @@ class PlanPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SubscriptionPlanWidget(
+              SubscriptionPlanWidget(
                 title: '10-Days Free Trail',
                 description: 'No credit/debit card details required.',
-                features: ['hhsdhhshj', 'dkjshhdssd', 'shdjhsdhj'],
+                features: const ['hhsdhhshj', 'dkjshhdssd', 'shdjhsdhj'],
+                buttonLabel: 'Continue with free trail',
+                onPressed: () {},
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(
-                        Color.fromRGBO(0, 118, 255, 1)),
-                    shape: WidgetStateProperty.all(
-                      const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: SubscriptionPlanWidget(
                   title: 'Monthly Plan',
                   description: '₹200 per month',
-                  features: ['hhsdhhshj', 'dkjshhdssd', 'shdjhsdhj'],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: TextButton(
+                  features: const ['hhsdhhshj', 'dkjshhdssd', 'shdjhsdhj'],
+                  buttonLabel: 'Continue with monthly plan',
                   onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: const WidgetStatePropertyAll(
-                        Color.fromRGBO(0, 118, 255, 1)),
-                    shape: WidgetStateProperty.all(
-                      const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ),
               ),
             ],
